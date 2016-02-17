@@ -12,13 +12,13 @@ config :pgboard, Pgboard.Endpoint,
   code_reloader: true,
   cache_static_lookup: false,
   check_origin: false,
-  watchers: []
+  watchers: ["node": ["webpack.devserver.js"]]
 
 # Watch static and templates for browser reloading.
 config :pgboard, Pgboard.Endpoint,
   live_reload: [
     patterns: [
-      ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
+      ~r{priv/static/.*(css|png|jpeg|jpg|gif|svg)$},
       ~r{web/views/.*(ex)$},
       ~r{web/templates/.*(eex)$}
     ]
@@ -36,7 +36,7 @@ config :phoenix, :stacktrace_depth, 20
 config :pgboard, Pgboard.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "postgres",
+  password: "",
   database: "pgboard_dev",
   hostname: "localhost",
   pool_size: 10

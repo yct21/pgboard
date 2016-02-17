@@ -20,8 +20,6 @@ defmodule Pgboard.Web do
     quote do
       use Ecto.Model
 
-      import Ecto.Changeset
-      import Ecto.Query, only: [from: 1, from: 2]
     end
   end
 
@@ -39,7 +37,7 @@ defmodule Pgboard.Web do
 
   def view do
     quote do
-      use Phoenix.View, root: "web/templates"
+      use Phoenix.View, root: "backend/templates"
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 2, view_module: 1]
@@ -64,6 +62,7 @@ defmodule Pgboard.Web do
       alias Pgboard.Repo
       import Ecto.Model
       import Ecto.Query, only: [from: 1, from: 2]
+
     end
   end
 

@@ -2,11 +2,11 @@ defmodule Pgboard.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "rooms:*", Pgboard.RoomChannel
+  channel "games:room", Pgboard.GameChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
-  # transport :longpoll, Phoenix.Transports.LongPoll
+  transport :longpoll, Phoenix.Transports.LongPoll
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -19,6 +19,17 @@ defmodule Pgboard.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
+  @token_max_age 2 * 7 * 24 * 60 * 60 # two weeks
+  def connect(%{"token" => token}, socket) do
+    case Phoenix.Token.verify(socket, "user socket", token, max_age: @token_max_age) do
+      {:ok, user_id} ->
+        user = Pgboard.Repo.get!(Pgboard.User, user_id)
+        {:ok, assign(socket, :current_user, user)}
+      {:error, _reason} ->
+        :error
+    end
+  end
+
   def connect(_params, socket) do
     {:ok, socket}
   end
@@ -33,5 +44,5 @@ defmodule Pgboard.UserSocket do
   #     Pgboard.Endpoint.broadcast("users_socket:" <> user.id, "disconnect", %{})
   #
   # Returning `nil` makes this socket anonymous.
-  def id(_socket), do: nil
+  def id(socket), do: nil
 end

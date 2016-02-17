@@ -1,0 +1,12 @@
+<div id="root">
+</div>
+
+<script>
+  window.__INITIAL_DATA__ = <%= raw(@conn.assigns.initial_data) %>;
+</script>
+
+<%= if Mix.env == :dev do %>
+   <script src='http://localhost:4001/app.js'></script>
+<% else %>
+  <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+<% end %>

@@ -13,7 +13,7 @@ config :logger, level: :warn
 config :pgboard, Pgboard.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "postgres",
+  password: "",
   database: "pgboard_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
