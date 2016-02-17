@@ -5,6 +5,7 @@ import createLogger from "redux-logger"
 import { Provider } from "react-redux"
 import reducers from "reducers"
 import MainComponent from "components/MainComponent"
+import camelize from "camelize"
 
 // so we have a store here
 let logger = createLogger()
@@ -18,3 +19,13 @@ ReactDom.render(
   </Provider>,
   rootElement
 )
+
+function initialState() {
+  const remoteState = camelize(window.__INITIAL_DATA__)
+  const localState =
+    document.location.hash == "#meow" ?
+    {gameMaster: true, board: null}:
+    {gameMaster: false}
+
+  return {remoteState, localState}
+}
