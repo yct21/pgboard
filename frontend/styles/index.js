@@ -7,5 +7,6 @@ export const baseColors = {
   primaryTextColor: "#212121",
   secondaryTextColor: "#727272",
   dividerColor: "#B6B6B6",
-  selectedButtonColor: "#00796B"
+  selectedButtonColor: "#00796B",
+  fieldBackgroundColor: "#f5f5f5"
 }
