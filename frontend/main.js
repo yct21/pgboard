@@ -24,7 +24,7 @@ function initialState() {
   const remoteState = camelize(window.__INITIAL_DATA__)
   const localState =
     document.location.hash == "#meow" ?
-    {gameMaster: true, board: null}:
+    {gameMaster: true, boardState: ""}:
     {gameMaster: false}
 
   return {remoteState, localState}
