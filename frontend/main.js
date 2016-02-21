@@ -22,10 +22,20 @@ ReactDom.render(
 
 function initialState() {
   const remoteState = camelize(window.__INITIAL_DATA__)
-  const localState =
-    document.location.hash == "#meow" ?
-    {gameMaster: true, boardState: ""}:
-    {gameMaster: false}
+  const isMaster = document.location.hash === "#meow"
+  const consoleState =
+    isMaster ?
+    initialMasterLocalState(remoteState.board) :
+    null
 
-  return {remoteState, localState}
+  return {remoteState, consoleState, isMaster}
+}
+
+function initialMasterLocalState(board) {
+  return {
+    editingState: JSON.stringify(board),
+    editingStateValid: true,
+    previewingState: board,
+    currentLog: "Meow"
+  }
 }

@@ -19,8 +19,8 @@ const rightElementStyle = {
 }
 
 // renderers
-export default function Header({dispatch}) {
-  const iconElementRight = loginElement(dispatch)
+export default function Header({}) {
+  const iconElementRight = loginElement()
 
   const appBarProps = {
     style: appbarStyle,
@@ -33,6 +33,6 @@ export default function Header({dispatch}) {
   return <AppBar {...appBarProps}/>
 }
 
-function loginElement(dispatch) {
+function loginElement() {
   return <FlatButton label="Log in"/>
 }

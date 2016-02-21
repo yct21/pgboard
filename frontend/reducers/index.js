@@ -1,13 +1,17 @@
-// import updateRemoteState from "reducers/updateRemoteState"
-// import * as newGameModalReducers from "reducers/newGameModalReducers"
-// import * as headerPlayerInfoReducers from "reducers/headerPlayerInfoReducers"
-// import * as initializeAppReducers from "reducers/initializeAppReducers"
+import {
+  updateCurrentLog,
+  updateEditingState,
+  previewValidEditingState,
+  previewInvalidEditingState,
+  cancelStateEditing
+} from "reducers/consoleReducers"
 
 const reducers = {
-  // updateRemoteState,
-  // ...initializeAppReducers,
-  // ...headerPlayerInfoReducers,
-  // ...newGameModalReducers
+  updateCurrentLog,
+  updateEditingState,
+  previewValidEditingState,
+  previewInvalidEditingState,
+  cancelStateEditing
 }
 
 export default function reduce(state, action) {

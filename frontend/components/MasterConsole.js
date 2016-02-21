@@ -1,24 +1,16 @@
 import React from "react"
 import Paper from "material-ui/lib/paper"
 import TextField from "material-ui/lib/text-field"
-import Avatar from "material-ui/lib/avatar"
 import Divider from "material-ui/lib/divider"
 import RaisedButton from "material-ui/lib/raised-button"
 // import FactoryIcon from "icons/FactoryIcon"
 import PaperHead from "components/PaperHead"
 import {baseColors} from "styles"
-import _ from "lodash"
 
 // styles
 const wrapStyle = {
   margin: "0 10%",
   paddingBottom: "1px"
-}
-
-const headerStyle = {
-  buttonStyle: {
-    backgroundColor: baseColors.selectedButtonColor
-  }
 }
 
 const consoleStyle = {
@@ -48,17 +40,20 @@ const panelStyle = {
 }
 
 // renderers
-export default function MasterConsole({boardState, dispatch}) {
+export default function MasterConsole({consoleState, dispatch}) {
+  const {editingState, editingStateValid, currentLog} = consoleState
+
   const paperHeadProps = {
     title: "Console"
   }
 
   const boardStateFieldProps = {
     style: consoleStyle.fieldStyle,
-    value: boardState,
+    value: editingState,
     multiLine: true,
     fullWidth: true,
-    rows: 20
+    rows: 20,
+    onChange: onEditingStateChange(dispatch)
   }
 
   return (
@@ -68,16 +63,18 @@ export default function MasterConsole({boardState, dispatch}) {
         <TextField {...boardStateFieldProps}/>
       </div>
       <Divider />
-      {panel(dispatch, "meow")}
+      {panel(dispatch, currentLog, editingState, editingStateValid)}
     </Paper>
   )
 }
 
-function panel(dispatch, currentLog) {
+function panel(dispatch, currentLog, editingState, editingStateValid) {
   const logProps = {
     hintText: "so what have you done?",
     style: panelStyle.logFieldStyle,
-    // value: currentLog
+    value: currentLog,
+    errorText: editingStateValid ? null : "Board State not a valid JSON",
+    onChange: onCurrentLogChange(dispatch)
   }
 
   const submitButtonProps = {
@@ -87,16 +84,61 @@ function panel(dispatch, currentLog) {
     backgroundColor: baseColors.darkPrimaryColor
   }
 
+  const previewButtonProps = {
+    label: "Preview",
+    primary: true,
+    style: panelStyle.buttonStyle,
+    backgroundColor: baseColors.darkPrimaryColor,
+    onClick: onClickPreview(editingState, dispatch)
+  }
+
   const resetButtonProps = {
-    label: "reset",
-    style: panelStyle.buttonStyle
+    label: "Reset",
+    style: panelStyle.buttonStyle,
+    onClick: onClickReset(dispatch)
   }
 
   return (
     <div style={panelStyle.wrapDivStyle}>
       <TextField {...logProps}/>
       <RaisedButton {...submitButtonProps} />
+      <RaisedButton {...previewButtonProps} />
       <RaisedButton {...resetButtonProps} />
     </div>
   )
+}
+
+// event handlers
+
+function onCurrentLogChange(dispatch) {
+  return (event) => {
+    dispatch({type: "updateCurrentLog", payload: {currentLog: event.target.value}})
+  }
+}
+
+function onEditingStateChange(dispatch) {
+  return (event) => {
+    dispatch({type: "updateEditingState", payload: {editingState: event.target.value}})
+  }
+}
+
+function onClickReset(dispatch) {
+  return () => {
+    dispatch({type: "resetEditingState"})
+  }
+}
+
+function onClickPreview(editingState, dispatch) {
+  return () => {
+    try {
+      console.log(editingState)
+      const previewState = JSON.parse(editingState)
+
+      // if nothing happens
+      dispatch({type: "previewValidEditingState", payload: {previewState}})
+    } catch (e) {
+      console.log(e)
+      dispatch({type: "previewInvalidEditingState"})
+    }
+  }
 }

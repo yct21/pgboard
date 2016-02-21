@@ -4,16 +4,12 @@ defmodule Pgboard.GameController do
 
   def index(conn, _params) do
     # game settings to create a new game
-    game_setting = %{
-      min_player_amount: 3,
-      max_player_amount: 6,
-      default_player_amount: 5,
-      available_maps: [:Germany, :USA],
-      default_map: :Germany
-    }
+    players = []
 
     initial_data = %{
-      game_setting: game_setting
+      board: %{
+        players: players
+      }
     }
 
     render conn, "index.html", initial_data: Poison.encode!(initial_data)
