@@ -5,6 +5,7 @@
 /*.ez
 /node_modules
 /.eslintrc.js
+/temp_state.json
 
 # Generate on crash by the VM
 erl_crash.dump

@@ -25,6 +25,7 @@ export default function RawMainComponent({isMaster, consoleState, remoteState, d
     <div>
       <Header {...headerProps} />
       {masterConsoleBoard}
+      <PlayerBoard {...playerBoardProps} />
     </div>
   )
 }

@@ -10,3 +10,13 @@ export const baseColors = {
   selectedButtonColor: "#00796B",
   fieldBackgroundColor: "#f5f5f5"
 }
+
+export const boardColor = {
+  gray: "#BDBDBD",
+  purple: "#6A0888",
+  cyan: "#01DFA5",
+  orange: "#FE9A2E",
+  blue: "2E2EFE",
+  yellow: "#FFFF00",
+  red: "#DF0101"
+}
