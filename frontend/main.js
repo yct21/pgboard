@@ -42,7 +42,7 @@ function initialMasterLocalState(board) {
 
 function mockRemoteState() {
   return {
-    "playerOrder": [42, 11, 25, 21, 81, 49],
+    "playerOrder": [42, 11, 25, 21, 81],
     "tableOrder": [42],
     "players": {
       "42": {
@@ -109,21 +109,6 @@ function mockRemoteState() {
         "id": 81,
         "name": "胭脂糖6",
         "color": "purple",
-        "portrait": "f7e3e883ade88482e7b39636e829",
-        "funds": 42,
-        "cities": 11,
-        "plants": [11, 42],
-        "resources": {
-          "coal": 1,
-          "oil": 2,
-          "garbage": 4,
-          "uranium": 8
-        }
-      },
-      "49": {
-        "id": 49,
-        "name": "胭脂糖6",
-        "color": "red",
         "portrait": "f7e3e883ade88482e7b39636e829",
         "funds": 42,
         "cities": 11,

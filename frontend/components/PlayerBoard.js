@@ -10,7 +10,6 @@ import OilIcon from "icons/OilIcon"
 import UraniumIcon from "icons/UraniumIcon"
 import GarbageIcon from "icons/GarbageIcon"
 import {baseColors} from "styles"
-import _ from "lodash"
 
 // styles
 
@@ -21,19 +20,27 @@ const wrapStyle = {
 
 const playerListStyle = {
   wrapDivStyle: {
-    margin: "20px 2%"
+    margin: "20px 2%",
+    textAlign: "center"
   },
 
   wrapListStyle: {
     display: "inline-block",
-    width: "272px",
+    width: "288px",
+    height: "360px",
     verticalAlign: "top",
-    margin: "10px 10px"
+    margin: "10px 21px"
+  },
+
+  dummyImgStyle: {
+    width: "100%",
+    height: "360px"
   },
 
   playerInfoStyle: {
     padding: "14px 90px 5px 70px",
     position: "relative",
+    textAlign: "left",
     height: "55px",
     color: baseColors.darkPrimaryColor
   },
@@ -116,33 +123,53 @@ export default function PlayerBoard({players, playerOrder}) {
   return (
     <Paper rounded={false} style={wrapStyle}>
       <PaperHead {...paperHeadProps}/>
-      <div style={playerListStyle.wrapDivStyle}>
-        {playerCards(players, playerOrder)}
-      </div>
+      {playerCards(players, playerOrder)}
     </Paper>
   )
 }
 
 function playerCards(players, playerOrder) {
-  return playerOrder.map((playerId, index) => playerCard(players[playerId], index))
+  return (
+    <div>
+      <div style={playerListStyle.wrapDivStyle}>
+        {/* Loop statement considered harmful... */}
+        {playerCard(players[playerOrder[0]], 0)}
+        {playerCard(players[playerOrder[1]], 1)}
+        {playerCard(players[playerOrder[2]], 2)}
+      </div>
+      <div style={playerListStyle.wrapDivStyle}>
+        {playerCard(players[playerOrder[3]], 3)}
+        {playerCard(players[playerOrder[4]], 4)}
+        {playerCard(players[playerOrder[5]], 5)}
+      </div>
+    </div>
+  )
 }
 
 function playerCard(player, index) {
   const wrapPaperProps = {
     rounded: false,
     style: playerListStyle.wrapListStyle,
-    key: player.id
+    key: index
   }
 
-  return (
-    <Paper {...wrapPaperProps}>
-      {playerBasicInfo(player)}
-      <Divider />
-      {playerResourceList(player)}
-      <Divider />
-      {playerPlantList(player)}
-    </Paper>
-  )
+  if (player) {
+    return (
+      <Paper {...wrapPaperProps}>
+        {playerBasicInfo(player)}
+        <Divider />
+        {playerResourceList(player)}
+        <Divider />
+        {playerPlantList(player)}
+      </Paper>
+    )
+  } else {
+    return (
+      <Paper {...wrapPaperProps}>
+        <img src="/images/cat.png" style={playerListStyle.dummyImgStyle}/>
+      </Paper>
+    )
+  }
 }
 
 function playerBasicInfo(player) {
