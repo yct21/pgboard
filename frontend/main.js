@@ -42,7 +42,7 @@ function initialMasterLocalState(board) {
 
 function mockRemoteState() {
   return {
-    "playerOrder": [42, 11],
+    "playerOrder": [42, 11, 25, 21, 81, 49],
     "tableOrder": [42],
     "players": {
       "42": {

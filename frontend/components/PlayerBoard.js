@@ -9,7 +9,7 @@ import CoalIcon from "icons/CoalIcon"
 import OilIcon from "icons/OilIcon"
 import UraniumIcon from "icons/UraniumIcon"
 import GarbageIcon from "icons/GarbageIcon"
-import {baseColors, boardColor} from "styles"
+import {baseColors} from "styles"
 import _ from "lodash"
 
 // styles
@@ -21,14 +21,14 @@ const wrapStyle = {
 
 const playerListStyle = {
   wrapDivStyle: {
-    margin: "20px 0 20px 16px"
+    margin: "20px 2%"
   },
 
   wrapListStyle: {
     display: "inline-block",
     width: "272px",
     verticalAlign: "top",
-    margin: "10px 5%"
+    margin: "10px 10px"
   },
 
   playerInfoStyle: {
@@ -108,7 +108,7 @@ const playerListStyle = {
 
 // renderers
 
-export default function PlayerBoard({players}) {
+export default function PlayerBoard({players, playerOrder}) {
   const paperHeadProps = {
     title: "Players"
   }
@@ -117,17 +117,17 @@ export default function PlayerBoard({players}) {
     <Paper rounded={false} style={wrapStyle}>
       <PaperHead {...paperHeadProps}/>
       <div style={playerListStyle.wrapDivStyle}>
-        {playerCards(_.values(players))}
+        {playerCards(players, playerOrder)}
       </div>
     </Paper>
   )
 }
 
-function playerCards(playerList) {
-  return playerList.map((player) => playerCard(player))
+function playerCards(players, playerOrder) {
+  return playerOrder.map((playerId, index) => playerCard(players[playerId], index))
 }
 
-function playerCard(player) {
+function playerCard(player, index) {
   const wrapPaperProps = {
     rounded: false,
     style: playerListStyle.wrapListStyle,

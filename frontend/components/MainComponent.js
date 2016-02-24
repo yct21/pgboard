@@ -17,7 +17,7 @@ export default function RawMainComponent({isMaster, consoleState, remoteState, d
   }
 
   const headerProps = {}
-  const playerBoardProps = {players: viewBoard.players}
+  const playerBoardProps = {players: viewBoard.players, playerOrder: viewBoard.playerOrder}
   // const gameListProps = {gameListState, userInfo, games, dispatch}
   // const newGameModalProps = {newGameModalState, gameSetting, dispatch}
 
