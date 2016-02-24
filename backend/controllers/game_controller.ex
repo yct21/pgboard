@@ -15,7 +15,7 @@ defmodule Pgboard.GameController do
             "color" => "red",
             "funds" => 42,
             "cities" => 11,
-            "plants" => [11, 42],
+            "plants" => ["11", "42", "12"],
             "resources" => %{
               "coal" => 1,
               "oil" => 2,

@@ -2,11 +2,8 @@ import React from "react"
 import Paper from "material-ui/lib/paper"
 import Avatar from "material-ui/lib/avatar"
 import Divider from "material-ui/lib/divider"
-import List from "material-ui/lib/lists/list"
-import ListItem from 'material-ui/lib/lists/list-item'
-// import FactoryIcon from "icons/FactoryIcon"
+import PlantItem from "components/PlantItem"
 import PaperHead from "components/PaperHead"
-import plants from "game/plants"
 import CityIcon from "icons/CityIcon"
 import CoalIcon from "icons/CoalIcon"
 import OilIcon from "icons/OilIcon"
@@ -219,5 +216,13 @@ function playerResourceIcon(resourceIcon, amount) {
 }
 
 function playerPlantList(player) {
-
+  return (
+    <div>
+      <PlantItem plantId={player.plants[0]}/>
+      <Divider />
+      <PlantItem plantId={player.plants[1]}/>
+      <Divider />
+      <PlantItem plantId={player.plants[2]}/>
+    </div>
+  )
 }

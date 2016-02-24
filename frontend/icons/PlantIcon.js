@@ -1,6 +1,9 @@
 import React from "react"
+import {baseColors} from "styles"
 
 export default function FactoryIcon({width, height, fillColor}) {
+  fillColor = fillColor || baseColors.darkPrimaryColor
+  
   return (
     <svg version="1.1" xmlns="http://www.w3.org/svg/2000" x="0px" y="0px"
       width={`${width}px`} height={`${height}px`} viewBox="0 0 512 512" fill={fillColor}>
