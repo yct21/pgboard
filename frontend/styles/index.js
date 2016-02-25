@@ -8,7 +8,8 @@ export const baseColors = {
   secondaryTextColor: "#727272",
   dividerColor: "#B6B6B6",
   selectedButtonColor: "#00796B",
-  fieldBackgroundColor: "#f5f5f5"
+  fieldBackgroundColor: "#f5f5f5",
+  unavalableIconColor: "#BDBDBD"
 }
 
 export const boardColor = {

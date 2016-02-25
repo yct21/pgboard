@@ -43,6 +43,12 @@ function initialMasterLocalState(board) {
 function mockRemoteState() {
   return {
     "playerOrder": [42, 11, 25, 21, 81],
+    "resources": {
+      "coal": 17,
+      "oil": 22,
+      "garbage": 14,
+      "uranium": 3
+    },
     "tableOrder": [42],
     "gameInfo": {
       gameStep: 1,

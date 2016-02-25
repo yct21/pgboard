@@ -58,7 +58,7 @@ export default function PlantBoard({plantsInMarket, gameStep}) {
 
 function plantMarket(plantsInMarket, gameStep) {
   const availablePlantsAmount = 4
-  const wrapPaperProps = {
+  const wrapDivProps = {
     rounded: false,
     style: plantBoardStyle.plantMarket.wrapStyle
   }
@@ -72,7 +72,7 @@ function plantMarket(plantsInMarket, gameStep) {
   }
 
   return (
-    <div {...wrapPaperProps}>
+    <div {...wrapDivProps}>
       {availableMarket(availablePlants)}
       {futureMarket(futurePlants)}
     </div>
