@@ -44,6 +44,11 @@ function mockRemoteState() {
   return {
     "playerOrder": [42, 11, 25, 21, 81],
     "tableOrder": [42],
+    "gameInfo": {
+      gameStep: 1,
+      map: "usa"
+    },
+    "plantsInMarket": ["03", "04", "05", "06", "07", "08", "09", "10"],
     "players": {
       "42": {
         "id": 42,

@@ -29,7 +29,7 @@ const playerListStyle = {
     width: "288px",
     height: "360px",
     verticalAlign: "top",
-    margin: "10px 21px"
+    margin: "10px 21px 10px 0px"
   },
 
   dummyImgStyle: {

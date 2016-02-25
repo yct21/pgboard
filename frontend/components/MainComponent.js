@@ -3,6 +3,7 @@ import {connect} from "react-redux"
 import Header from "components/Header"
 import MasterConsole from "components/MasterConsole"
 import PlayerBoard from "components/PlayerBoard"
+import PlantBoard from "components/PlantBoard"
 
 export default function RawMainComponent({isMaster, consoleState, remoteState, dispatch}) {
   let masterConsoleBoard = null
@@ -18,14 +19,14 @@ export default function RawMainComponent({isMaster, consoleState, remoteState, d
 
   const headerProps = {}
   const playerBoardProps = {players: viewBoard.players, playerOrder: viewBoard.playerOrder}
-  // const gameListProps = {gameListState, userInfo, games, dispatch}
-  // const newGameModalProps = {newGameModalState, gameSetting, dispatch}
+  const plantBoardProps = {plantsInMarket: viewBoard.plantsInMarket, gameStep: viewBoard.gameInfo.gameStep}
 
   return (
     <div>
       <Header {...headerProps} />
       {masterConsoleBoard}
       <PlayerBoard {...playerBoardProps} />
+      <PlantBoard {...plantBoardProps} />
     </div>
   )
 }
