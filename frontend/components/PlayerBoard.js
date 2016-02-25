@@ -81,10 +81,11 @@ const playerListStyle = {
     width: "25px",
     height: "25px",
     lineHeight: "25px",
-    color: "#FFF",
     borderRadius: "50",
+    opacity: "0.8",
     backgroundColor: "#757575",
     textAlign: "center",
+    color: "#FFF",
     fontWeight: "bold"
   },
 
@@ -92,8 +93,7 @@ const playerListStyle = {
     position: "absolute",
     top: "5px",
     left: "5px",
-    opacity: "0.5",
-    zIndex: "2"
+    zIndex: "0"
   },
 
   nameStyle: {

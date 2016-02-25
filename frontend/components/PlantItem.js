@@ -23,11 +23,11 @@ const plantItemStyle = {
     iconStyle: {
       position: "absolute",
       left: "16px",
-      opacity: "0.9",
       top: "16px"
     },
 
     plantIdStyle: {
+      opacity: "0.9",
       position: "absolute",
       top: "26px",
       left: "22px",
@@ -38,7 +38,7 @@ const plantItemStyle = {
       borderRadius: "50",
       backgroundColor: "#757575",
       textAlign: "center",
-      zIndex: 0,
+      zIndex: "2",
       fontWeight: "bold"
     }
   },
@@ -47,12 +47,12 @@ const plantItemStyle = {
     iconStyle: {
       position: "absolute",
       right: "16px",
-      opacity: "0.5",
-      zIndex: 2,
       top: "16px"
     },
 
     supportCityAmountStyle: {
+      zIndex: "2",
+      opacity: "0.8",
       position: "absolute",
       top: "21px",
       right: "25px",
