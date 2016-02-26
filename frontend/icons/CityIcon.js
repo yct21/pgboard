@@ -1,9 +1,9 @@
 import React from "react"
-import {boardColor} from "styles"
+import {boardColors} from "styles"
 
 export default function CityIcon({width, height, fillColor, firstColor, secondColor, thirdColor}) {
   if (!fillColor) {
-    fillColor = boardColor.gray
+    fillColor = boardColors.gray
   }
 
   firstColor = firstColor || fillColor

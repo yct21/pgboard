@@ -57,7 +57,6 @@ export default function PlantBoard({plantsInMarket, gameStep}) {
 }
 
 function plantMarket(plantsInMarket, gameStep) {
-  const availablePlantsAmount = 4
   const wrapDivProps = {
     rounded: false,
     style: plantBoardStyle.plantMarket.wrapStyle
@@ -65,6 +64,7 @@ function plantMarket(plantsInMarket, gameStep) {
 
   let availablePlants = null
   let futurePlants = null
+  const availablePlantsAmount = 4
   if (gameStep === 1 || gameStep === 2) {
     [availablePlants, futurePlants] = _.chunk(plantsInMarket.sort(), availablePlantsAmount)
   } else {

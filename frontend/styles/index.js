@@ -12,12 +12,12 @@ export const baseColors = {
   unavalableIconColor: "#BDBDBD"
 }
 
-export const boardColor = {
+export const boardColors = {
   gray: "#BDBDBD",
   purple: "#6A0888",
-  cyan: "#01DFA5",
+  red: "#DF0101",
+  blue: "#2E2EFE",
+  pink: "#ff7799",
   orange: "#FE9A2E",
-  blue: "2E2EFE",
-  yellow: "#FFFF00",
-  red: "#DF0101"
+  black: "#000000"
 }

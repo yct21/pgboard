@@ -135,8 +135,6 @@ function uraniumResource(resourceNum) {
       baseColors.darkPrimaryColor :
       baseColors.unavalableIconColor
 
-    console.log(`${index} ${(11 - index)} ${resourceNum}`)
-
     const resourceIconProps = {
       width: 30,
       height: 30,

@@ -9,7 +9,7 @@ import CoalIcon from "icons/CoalIcon"
 import OilIcon from "icons/OilIcon"
 import UraniumIcon from "icons/UraniumIcon"
 import GarbageIcon from "icons/GarbageIcon"
-import {baseColors} from "styles"
+import {baseColors, boardColors} from "styles"
 
 // styles
 
@@ -176,7 +176,7 @@ function playerBasicInfo(player) {
   const cityIconProps = {
     height: "40",
     width: "40",
-    fillColor: player.color
+    fillColor: boardColors[player.color]
   }
 
   const cityAmountText = player.cities >=10 ? player.cities : "0" + player.cities
