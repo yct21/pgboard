@@ -6,24 +6,8 @@ defmodule Pgboard.GameController do
     initial_data = %{
       board: %{
         playerOrder: [42],
-        tableOrder: [42],
-        players: %{
-          "42" => %{
-            "id" => 42,
-            "name" => "胭脂糖6",
-            "portrait" => "f7e3e883ade88482e7b39636e829",
-            "color" => "red",
-            "funds" => 42,
-            "cities" => 11,
-            "plants" => ["11", "42", "12"],
-            "resources" => %{
-              "coal" => 1,
-              "oil" => 2,
-              "garbage" => 4,
-              "uranium" => 8
-            }
-          }
-        }
+        tableOrder: [42]
+
       }
     }
 
