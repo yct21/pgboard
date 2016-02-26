@@ -13,7 +13,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :pgboard, Pgboard.Endpoint,
   http: [port: 4002],
-  url: [host: "localhost", port: 4002]
+  url: [host: "localhost", path: "/pgboard", port: 4002]
 
 # Do not print debug messages in production
 config :logger, level: :info
