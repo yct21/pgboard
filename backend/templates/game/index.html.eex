@@ -12,7 +12,7 @@
   <script src='http://localhost:4001/app.js'></script>
 <% else %>
   <script>
-  window.__CHANNEL_PATH__ = "/phoenix/socket";
+  window.__CHANNEL_PATH__ = "/pgboard/socket";
   </script>
   <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
 <% end %>
