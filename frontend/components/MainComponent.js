@@ -7,13 +7,13 @@ import PlantBoard from "components/PlantBoard"
 import ResourceBoard from "components/ResourceBoard"
 import MapBoard from "components/MapBoard"
 
-export default function RawMainComponent({isMaster, consoleState, remoteState, dispatch}) {
+export default function RawMainComponent({isMaster, consoleState, remoteState, channel, dispatch}) {
   let masterConsoleBoard = null
   let viewBoard = null
   if (isMaster) {
     viewBoard = consoleState.previewingState
 
-    const masterConsoleProps = {consoleState, dispatch}
+    const masterConsoleProps = {consoleState, dispatch, channel}
     masterConsoleBoard = <MasterConsole {...masterConsoleProps} />
   } else {
     viewBoard = remoteState.board

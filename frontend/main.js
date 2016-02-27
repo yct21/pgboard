@@ -6,6 +6,7 @@ import { Provider } from "react-redux"
 import reducers from "reducers"
 import MainComponent from "components/MainComponent"
 import camelize from "camelize"
+import {Socket} from "websocket/phoenix"
 
 // so we have a store here
 let logger = createLogger()
@@ -23,6 +24,7 @@ ReactDom.render(
 function initialState() {
   const remoteState = {board: JSON.parse(camelize(window.__INITIAL_DATA__))}
   const isMaster = document.location.hash === "#meow"
+  const channel = initializeChannel()
   const consoleState =
     isMaster ?
     initialMasterLocalState(remoteState.board) :
@@ -30,7 +32,7 @@ function initialState() {
 
   console.log(remoteState)
 
-  return {remoteState, consoleState, isMaster}
+  return {remoteState, consoleState, channel, isMaster}
 }
 
 function initialMasterLocalState(board) {
@@ -40,4 +42,23 @@ function initialMasterLocalState(board) {
     previewingState: board,
     currentLog: "Meow"
   }
+}
+
+function initializeChannel() {
+  const socket = new Socket("/socket", {
+    params: {},
+    logger: (kind, msg, data) => {console.log(`${kind}: ${msg}`), data}
+  })
+
+  socket.connect()
+  const channel = socket.channel("game")
+
+  channel
+    .join()
+    .receive("ok", resp => console.log("websocket joined", resp))
+    .receive("error", reason => console.log("joining websocket failed", reason))
+
+  channel.on("updateBoard", ({board}) => {store.dispatch({type: "updateBoard", payload: {board}})})
+
+  return channel
 }

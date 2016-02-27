@@ -6,12 +6,17 @@ import {
   cancelStateEditing
 } from "reducers/consoleReducers"
 
+import {
+  updateBoard
+} from "reducers/remoteReducers"
+
 const reducers = {
   updateCurrentLog,
   updateEditingState,
   previewValidEditingState,
   previewInvalidEditingState,
-  cancelStateEditing
+  cancelStateEditing,
+  updateBoard
 }
 
 export default function reduce(state, action) {

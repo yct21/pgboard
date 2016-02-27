@@ -40,7 +40,7 @@ const panelStyle = {
 }
 
 // renderers
-export default function MasterConsole({consoleState, dispatch}) {
+export default function MasterConsole({consoleState, dispatch, channel}) {
   const {editingState, editingStateValid, currentLog} = consoleState
 
   const paperHeadProps = {
@@ -63,12 +63,12 @@ export default function MasterConsole({consoleState, dispatch}) {
         <TextField {...boardStateFieldProps}/>
       </div>
       <Divider />
-      {panel(dispatch, currentLog, editingState, editingStateValid)}
+      {panel(dispatch, channel, currentLog, editingState, editingStateValid)}
     </Paper>
   )
 }
 
-function panel(dispatch, currentLog, editingState, editingStateValid) {
+function panel(dispatch, channel, currentLog, editingState, editingStateValid) {
   const logProps = {
     hintText: "so what have you done?",
     style: panelStyle.logFieldStyle,
@@ -81,7 +81,8 @@ function panel(dispatch, currentLog, editingState, editingStateValid) {
     label: "OK",
     primary: true,
     style: panelStyle.buttonStyle,
-    backgroundColor: baseColors.darkPrimaryColor
+    backgroundColor: baseColors.darkPrimaryColor,
+    onClick: onClickSubmit(editingState, channel, dispatch)
   }
 
   const previewButtonProps = {
@@ -95,7 +96,7 @@ function panel(dispatch, currentLog, editingState, editingStateValid) {
   const resetButtonProps = {
     label: "Reset",
     style: panelStyle.buttonStyle,
-    onClick: onClickReset(dispatch)
+    onClick: onClickReset(editingState,  dispatch)
   }
 
   return (
@@ -131,11 +132,27 @@ function onClickReset(dispatch) {
 function onClickPreview(editingState, dispatch) {
   return () => {
     try {
-      console.log(editingState)
       const previewState = JSON.parse(editingState)
 
       // if nothing happens
       dispatch({type: "previewValidEditingState", payload: {previewState}})
+    } catch (e) {
+      console.log(e)
+      dispatch({type: "previewInvalidEditingState"})
+    }
+  }
+}
+
+function onClickSubmit(editingState, channel, dispatch) {
+  return () => {
+    try {
+      const previewState = JSON.parse(editingState)
+      previewState
+
+      // if nothing happens
+      channel
+        .push("update_state", {"updated_board": editingState})
+        .receive("error", e => console.log(e))
     } catch (e) {
       console.log(e)
       dispatch({type: "previewInvalidEditingState"})
