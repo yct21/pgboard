@@ -3,13 +3,7 @@ defmodule Pgboard.GameController do
   use Pgboard.Web, :controller
 
   def index(conn, _params) do
-    initial_data = %{
-      board: %{
-        playerOrder: [42],
-        tableOrder: [42]
-
-      }
-    }
+    initial_data = Pgboard.Game.Board.get()
 
     render conn, "index.html", initial_data: Poison.encode!(initial_data)
   end

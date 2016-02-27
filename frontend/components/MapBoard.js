@@ -99,9 +99,10 @@ function cityMap(citiesOwner, players) {
 }
 
 function cityDiv(cityInfo, cityName, cityOwner, players) {
+  console.log(cityOwner)
   let cityIconProps = null
   let cityNameColor = null
-  if (cityOwner === "not_selected") {
+  if (cityOwner === "notSelected") {
     cityNameColor = baseColors.darkPrimaryColor
     cityIconProps = {
       fillColor: cityInfo.color,
