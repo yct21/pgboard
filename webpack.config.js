@@ -41,7 +41,7 @@ var config =  {
   output: {
     path: path.resolve(__dirname, buildPath),
     filename: "app.js",
-    publicPath: prod ? null : publicPath 
+    publicPath: prod ? null : publicPath
   },
   plugins: plugins,
   module: {

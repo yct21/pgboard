@@ -45,7 +45,9 @@ function initialMasterLocalState(board) {
 }
 
 function initializeChannel() {
-  const socket = new Socket("/socket", {
+  const socketUrl = window.__CHANNEL_PATH__
+
+  const socket = new Socket(socketUrl, {
     params: {},
     logger: (kind, msg, data) => {console.log(`${kind}: ${msg}`), data}
   })
