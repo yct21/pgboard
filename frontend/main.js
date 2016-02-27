@@ -59,6 +59,7 @@ function initializeChannel() {
     .receive("error", reason => console.log("joining websocket failed", reason))
 
   channel.on("updateBoard", ({board}) => {store.dispatch({type: "updateBoard", payload: {board}})})
+  window.__channel__ = channel
 
   return channel
 }

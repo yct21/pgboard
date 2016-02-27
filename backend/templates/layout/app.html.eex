@@ -78,8 +78,8 @@ App Env:
     <meta name="description" content="This project is just for fun. Please don't sue me.">
     <meta name="author" content="">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-    <link rel="shortcut icon" href="/pgboard/images/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/pgboard/images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="<%= static_path(@conn, "/images/favicon.ico") %>" type="image/x-icon">
+    <link rel="icon" href="<%= static_path(@conn, "/images/favicon.ico") %>" type="image/x-icon">
 
     <title>Power Grid</title>
   </head>
