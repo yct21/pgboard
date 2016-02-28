@@ -2,7 +2,7 @@ const plants = {
   "03": {resourceAmountNeeded: 2, plantType: "oil", supportCityAmount: 1},
   "04": {resourceAmountNeeded: 2, plantType: "coal", supportCityAmount: 1},
   "05": {resourceAmountNeeded: 2, plantType: "hybrid", supportCityAmount: 1},
-  "06": {resourceAmountNeeded: 2, plantType: "garbage", supportCityAmount: 1},
+  "06": {resourceAmountNeeded: 1, plantType: "garbage", supportCityAmount: 1},
   "07": {resourceAmountNeeded: 3, plantType: "oil", supportCityAmount: 2},
   "08": {resourceAmountNeeded: 3, plantType: "coal", supportCityAmount: 2},
   "09": {resourceAmountNeeded: 1, plantType: "oil", supportCityAmount: 1},
