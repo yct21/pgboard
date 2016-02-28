@@ -166,7 +166,7 @@ function playerCard(player, index) {
   } else {
     return (
       <Paper {...wrapPaperProps}>
-        <img src="/images/cat.png" style={playerListStyle.dummyImgStyle}/>
+        <img src={window.__DUMMY_IMG_URL__} style={playerListStyle.dummyImgStyle}/>
       </Paper>
     )
   }

@@ -3,6 +3,7 @@
 
 <script>
   window.__INITIAL_DATA__ = <%= raw(@conn.assigns.initial_data) %>;
+  window.__DUMMY_IMG_URL__ = "<%= static_path(@conn, "/images/meow.png") %>"
 </script>
 
 <%= if Mix.env == :dev do %>

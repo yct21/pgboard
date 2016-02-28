@@ -101,7 +101,7 @@ function futureMarket(futurePlants) {
       <Paper style={plantBoardStyle.plantMarket.marketStyle} >
         {marketTitle("Future")}
         <Divider />
-        <img src="/images/cat.png" style={plantBoardStyle.plantMarket.dummyImgStyle}/>
+        <img src={window.__DUMMY_IMG_URL__} style={plantBoardStyle.plantMarket.dummyImgStyle}/>
       </Paper>
     )
   }
