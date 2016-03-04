@@ -6,6 +6,7 @@ import PlayerBoard from "components/PlayerBoard"
 import PlantBoard from "components/PlantBoard"
 import ResourceBoard from "components/ResourceBoard"
 import MapBoard from "components/MapBoard"
+import gameMaps from "game/maps"
 
 export default function RawMainComponent({isMaster, consoleState, remoteState, channel, dispatch}) {
   let masterConsoleBoard = null
@@ -23,7 +24,7 @@ export default function RawMainComponent({isMaster, consoleState, remoteState, c
   const playerBoardProps = {players: viewBoard.players, playerOrder: viewBoard.playerOrder}
   const plantBoardProps = {plantsInMarket: viewBoard.plantsInMarket, gameStep: viewBoard.gameInfo.gameStep}
   const resourceBoardProps = {resources: viewBoard.resources}
-  const mapBoardProps = {players: viewBoard.players, citiesOwner: viewBoard.citiesOwner}
+  const mapBoardProps = {players: viewBoard.players, citiesOwner: viewBoard.citiesOwner, gameMap: gameMaps[viewBoard.gameInfo.map]}
 
   return (
     <div>

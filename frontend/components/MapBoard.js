@@ -2,7 +2,6 @@ import React from "react"
 import Paper from "material-ui/lib/paper"
 import PaperHead from "components/PaperHead"
 import CityIcon from "icons/CityIcon"
-import {citiesInfo, cityTunnels} from "game/cities"
 import {baseColors, boardColors} from "styles"
 import _ from "lodash"
 
@@ -73,7 +72,7 @@ const mapBoardStyle = {
 
 // renderers
 
-export default function MapBoard({players, citiesOwner}) {
+export default function MapBoard({players, citiesOwner, gameMap}) {
   const paperHeadProps = {
     title: "Map"
   }
@@ -81,14 +80,14 @@ export default function MapBoard({players, citiesOwner}) {
   return (
     <Paper rounded={false} style={mapBoardStyle.wrapStyle}>
       <PaperHead {...paperHeadProps}/>
-      {cityMap(citiesOwner, players)}
+      {cityMap(citiesOwner, gameMap, players)}
     </Paper>
   )
 }
 
-function cityMap(citiesOwner, players) {
-  const cityDivs = _.map(citiesInfo, (cityInfo, cityName) => cityDiv(cityInfo, cityName, citiesOwner[cityName], players))
-  const cityTunnelDivs = _.map(cityTunnels, (tunnel, index) => cityTunnel(citiesInfo[tunnel.city1], citiesInfo[tunnel.city2], tunnel.price, index))
+function cityMap(citiesOwner, gameMap, players) {
+  const cityDivs = _.map(gameMap.cities, (cityInfo, cityName) => cityDiv(cityInfo, cityName, citiesOwner[cityName], players))
+  const cityTunnelDivs = _.map(gameMap.tunnels, (tunnel, index) => cityTunnel(gameMap.cities[tunnel.city1], gameMap.cities[tunnel.city2], tunnel.price, index))
 
   return (
     <Paper style={mapBoardStyle.mapStyle.wrapStyle}>
