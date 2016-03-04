@@ -17,7 +17,7 @@ const mapBoardStyle = {
       margin: "20px auto",
       width: "1094px",
       position: "relative",
-      height: "840px",
+      height: "1740px",
       textAlign: "center"
     },
 
