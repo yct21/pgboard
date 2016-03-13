@@ -2,11 +2,9 @@ import React from "react"
 import {baseColors} from "styles"
 
 export default function EcologicalIcon({width, height, fillColor}) {
-  fillColor = fillColor || baseColors.darkPrimaryColor
-
   return (
     <svg version="1.1" xmlns="http://www.w3.org/svg/2000" x="0px" y="0px"
-      width={`${width}px`} height={`${height}px`} viewBox="0 0 297 297" fill={fillColor}>
+      width={`${width}px`} height={`${height}px`} viewBox="0 0 297 297" fill={fillColor || baseColors.darkPrimaryColor}>
       <g>
         <path d="M297,148.5c0-13.49-13.285-20.517-23.959-26.161c-2.557-1.353-6.365-3.366-8.778-4.967
           c1.304-2.699,3.721-6.563,5.333-9.144c6.616-10.579,14.114-22.569,7.5-33.994c-6.203-10.71-19.802-10.71-25.609-10.71

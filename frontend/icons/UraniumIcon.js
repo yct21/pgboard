@@ -2,11 +2,11 @@ import React from "react"
 import {baseColors} from "styles"
 
 export default function UraniumIcon({width, height, fillColor}) {
-  fillColor = fillColor || baseColors.darkPrimaryColor
+  var color = fillColor || baseColors.darkPrimaryColor
 
   return (
     <svg version="1.1" xmlns="http://www.w3.org/svg/2000" x="0px" y="0px"
-      width={`${width}px`} height={`${height}px`} viewBox="0 0 56.498 56.498" fill={fillColor}>
+      width={`${width}px`} height={`${height}px`} viewBox="0 0 56.498 56.498" fill={color}>
       <g>
         <path d="M19.658,25.285c0.264-2.549,1.633-4.768,3.62-6.169c0.405-0.286,0.553-0.823,0.297-1.248
           L14.383,2.581c-0.256-0.425-0.81-0.566-1.228-0.301C5.476,7.139,0.302,15.598,0,25.282c-0.016,0.495,0.388,0.897,0.883,0.897

@@ -82,7 +82,7 @@ export default function PlantItem({plantId}) {
 
     if (plant.plantType === "step3") {
       return (
-        <div style={plantItemStyle.wrapStyle}> Step 3 </div>
+        <div style={plantItemStyle.wrapStyle}>{" Step 3 "}</div>
       )
     } else {
       return (
@@ -123,7 +123,7 @@ function plantResources(plant) {
     height: 40
   }
 
-  switch(plant.plantType) {
+  switch (plant.plantType) {
   case "coal":
     return _.times(plant.resourceAmountNeeded, (index) => <CoalIcon key={index} {...resourceIconProps}/>)
     // return fast and break nothing...

@@ -2,11 +2,9 @@ import React from "react"
 import {baseColors} from "styles"
 
 export default function OilIcon({width, height, fillColor}) {
-  fillColor = fillColor || baseColors.darkPrimaryColor
-
   return (
     <svg version="1.1" xmlns="http://www.w3.org/svg/2000" x="0px" y="0px"
-      width={`${width}px`} height={`${height}px`} viewBox="0 0 418.471 418.471" fill={fillColor}>
+      width={`${width}px`} height={`${height}px`} viewBox="0 0 418.471 418.471" fill={fillColor || baseColors.darkPrimaryColor}>
       <g>
         <path d="M355.479,234.234c13.807,0,25-11.192,25-25s-11.193-25-25-25h-8.625V50h8.625c13.807,0,25-11.193,25-25s-11.193-25-25-25
           H62.992c-13.807,0-25,11.193-25,25s11.193,25,25,25l52.993-0.042c7.732,0,14,6.368,14,14.1c0,7.732-6.268,14-14,14H71.617v106.177

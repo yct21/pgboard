@@ -24,7 +24,7 @@ export default function Header({}) {
 
   const appBarProps = {
     style: appbarStyle,
-    title: <span style={titleStyle}>POWER GRID</span>,
+    title: <span style={titleStyle}>{"POWER GRID"}</span>,
     showMenuIconButton: false,
     iconStyleRight: rightElementStyle,
     iconElementRight

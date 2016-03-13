@@ -74,13 +74,13 @@ function resourceMarket(resources) {
 
   return (
     <Paper {...wrapPaperProps}>
-      {commonResources(CoalIcon, resources["coal"])}
+      {commonResources(CoalIcon, resources.coal)}
       <Divider />
-      {commonResources(OilIcon, resources["oil"])}
+      {commonResources(OilIcon, resources.oil)}
       <Divider />
-      {commonResources(GarbageIcon, resources["garbage"])}
+      {commonResources(GarbageIcon, resources.garbage)}
       <Divider />
-      {uraniumResource(resources["uranium"])}
+      {uraniumResource(resources.uranium)}
     </Paper>
   )
 }

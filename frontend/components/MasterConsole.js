@@ -96,7 +96,7 @@ function panel(dispatch, channel, currentLog, editingState, editingStateValid) {
   const resetButtonProps = {
     label: "Reset",
     style: panelStyle.buttonStyle,
-    onClick: onClickReset(editingState,  dispatch)
+    onClick: onClickReset(editingState, dispatch)
   }
 
   return (

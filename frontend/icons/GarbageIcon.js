@@ -2,11 +2,9 @@ import React from "react"
 import {baseColors} from "styles"
 
 export default function GarbageIcon({width, height, fillColor}) {
-  fillColor = fillColor || baseColors.darkPrimaryColor
-
   return (
     <svg version="1.1" xmlns="http://www.w3.org/svg/2000" x="0px" y="0px"
-      width={`${width}px`} height={`${height}px`} viewBox="0 0 408.483 408.483" fill={fillColor}>
+      width={`${width}px`} height={`${height}px`} viewBox="0 0 408.483 408.483" fill={fillColor || baseColors.darkPrimaryColor}>
       <g>
         <path d="M87.748,388.784c0.461,11.01,9.521,19.699,20.539,19.699h191.911c11.018,0,20.078-8.689,20.539-19.699l13.705-289.316
         H74.043L87.748,388.784z M247.655,171.329c0-4.61,3.738-8.349,8.35-8.349h13.355c4.609,0,8.35,3.738,8.35,8.349v165.293

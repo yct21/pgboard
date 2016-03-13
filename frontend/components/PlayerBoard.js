@@ -179,7 +179,7 @@ function playerBasicInfo(player) {
     fillColor: boardColors[player.color]
   }
 
-  const cityAmountText = player.cities >=10 ? player.cities : "0" + player.cities
+  const cityAmountText = player.cities >= 10 ? player.cities : "0" + player.cities
 
   return (
     <div style={playerListStyle.playerInfoStyle}>
@@ -228,7 +228,7 @@ function playerResourceIcon(resourceIcon, amount) {
     height: "40"
   }
 
-  const amountText = amount >=10 ? amount : "0" + amount
+  const amountText = amount >= 10 ? amount : "0" + amount
 
   return (
     <div style={playerListStyle.resourceDivStyle}>

@@ -2,11 +2,9 @@ import React from "react"
 import {baseColors} from "styles"
 
 export default function CoalIcon({width, height, fillColor}) {
-  fillColor = fillColor || baseColors.darkPrimaryColor
-
   return (
     <svg version="1.1" xmlns="http://www.w3.org/svg/2000" x="0px" y="0px"
-      width={`${width}px`} height={`${height}px`} viewBox="0 0 423.906 423.906" fill={fillColor}>
+      width={`${width}px`} height={`${height}px`} viewBox="0 0 423.906 423.906" fill={fillColor || baseColors.darkPrimaryColor}>
       <g>
         <g>
           <path d="M388.763,112.685H35.146c-4.881,0-8.84,3.957-8.84,8.84v42.687c0,4.882,3.959,8.841,8.84,8.841h9.158l27.213,145.853

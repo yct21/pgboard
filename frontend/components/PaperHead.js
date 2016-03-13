@@ -30,7 +30,7 @@ const rightSpanStyle = {
 // renderers
 export default function PaperHead({leftIcon, title, rightElement}) {
   const leftIconComponent = leftIcon ? <leftIcon style={leftIconStyle}/> : null
-  const rightElementComponent = rightElement? <span style={rightSpanStyle}> {rightElement} </span> : null
+  const rightElementComponent = rightElement ? <span style={rightSpanStyle}> {rightElement} </span> : null
 
   return (
     <div style={wrapDivStyle}>

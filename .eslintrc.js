@@ -108,7 +108,7 @@ module.exports = {
         "no-labels": 1,                  // disallow use of labeled statements
         "no-lone-blocks": 1,             // disallow unnecessary nested blocks
         "no-loop-func": 0,               // disallow creation of functions within loops
-        "no-magic-numbers": 1,           // disallow the use of magic numbers
+        "no-magic-numbers": 0,           // disallow the use of magic numbers
         "no-multi-spaces": 1,            // disallow use of multiple spaces (fixable)
         "no-multi-str": 0,               // disallow use of multiline strings
         "no-native-reassign": 0,         // disallow reassignments of native objects
@@ -124,7 +124,7 @@ module.exports = {
         "no-return-assign": 1,           // disallow use of assignment in return statement
         "no-script-url": 1,              // disallow use of javascript: urls.
         "no-self-compare": 1,            // disallow comparisons where both sides are exactly the same (off by default)
-        "no-sequences": 1,               // disallow use of comma operator
+        "no-sequences": 0,               // disallow use of comma operator
         "no-throw-literal": 1,           // restrict what can be thrown as an exception
         "no-unused-expressions": 0,      // disallow usage of expressions in statement position
         "no-useless-call": 1,            // disallow unnecessary .call() and .apply()
@@ -167,16 +167,16 @@ module.exports = {
         "react/display-name": 1,          // Prevent missing displayName in a React component definition
         "react/forbid-prop-types": 1,     // Forbid certain propTypes
         "react/jsx-boolean-value": 1,     // Enforce boolean attributes notation in JSX (fixable)
-        "react/jsx-closing-bracket-location": 1,  // Validate closing bracket location in JSX
+        "react/jsx-closing-bracket-location": 0,  // Validate closing bracket location in JSX
         "react/jsx-curly-spacing": 1,     // Enforce or disallow spaces inside of curly braces in JSX attributes (fixable)
         "react/jsx-equals-spacing": 1,    // Enforce or disallow spaces around equal signs in JSX attributes
         "react/jsx-handler-names": 1,     // Enforce event handler naming conventions in JSX
         "react/jsx-indent-props": [2, 2],  // Validate props indentation in JSX
         "react/jsx-indent": [2, 2],   // Validate JSX indentation
-        "react/jsx-key": 1,               // Validate JSX has key prop when in array or iterator
+        "react/jsx-key": 0,               // Validate JSX has key prop when in array or iterator
         "react/jsx-no-bind": [1, { "ignoreRefs": false, "allowArrowFunctions": true, "allowBind": true }],  // Prevent usage of .bind() and arrow functions in JSX props
         "react/jsx-no-duplicate-props": 1,  // Prevent duplicate props in JSX
-        "react/jsx-no-literals": 1,       // Prevent usage of unwrapped JSX strings
+        "react/jsx-no-literals": 0,       // Prevent usage of unwrapped JSX strings
         "react/jsx-no-undef": 1,          // Disallow undeclared variables in JSX
         "react/jsx-pascal-case": 1,       // Enforce PascalCase for user-defined JSX components
         "react/jsx-quotes": 0,            // DEPRECATED - Enforce quote style for JSX attributes

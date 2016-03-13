@@ -107,7 +107,7 @@ function cityDiv(cityInfo, cityName, cityOwner, players) {
       width: 50,
       height: 50
     }
-  } else if (cityOwner != "banned") {
+  } else if (cityOwner !== "banned") {
     cityNameColor = baseColors.darkPrimaryColor
     cityIconProps = {
       fillColor: baseColors.darkPrimaryColor,
@@ -155,7 +155,7 @@ function cityTunnel(cityInfo1, cityInfo2, price, index) {
 
   let lineX = centerX - radius
   let lineY = centerY
-  let alpha = Math.PI - Math.atan2(posY2-posY1, posX1-posX2)
+  let alpha = Math.PI - Math.atan2(posY2 - posY1, posX1 - posX2)
 
   const priceText = price >= 10 ? price : "0" + price
   return (
