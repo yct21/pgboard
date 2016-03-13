@@ -9,6 +9,7 @@ defmodule Pgboard.Mixfile do
      compilers: [:phoenix] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     test_paths: ["test/backend"],
      aliases: aliases,
      deps: deps]
   end
