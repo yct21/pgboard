@@ -6,6 +6,9 @@
 /node_modules
 /temp_state.json
 
+# playground
+/test.exs
+
 # Generate on crash by the VM
 erl_crash.dump
 

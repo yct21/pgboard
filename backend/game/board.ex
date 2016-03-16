@@ -1,16 +1,25 @@
 defmodule Pgboard.Game.Board do
-
+  @moduledoc """
+  Agent for Game board
+  """
   # api
   def start_link do
     Agent.start_link(&(init_data/0), name: __MODULE__)
   end
 
-  def get do
+  def get_state do
     Agent.get(__MODULE__, &(&1))
   end
 
-  def set(new_state) do
+  def set_state(new_state) do
     Agent.update(__MODULE__, fn(_state) -> new_state end)
+  end
+
+  def handle_move(move) do
+    current_state = get_state
+    case Pgboard.Game.Arbiter.handle_move(current_state, move) do
+      {:ok, next_state} -> set_state(next_state)
+    end
   end
 
   # private functions
