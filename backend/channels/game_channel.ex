@@ -5,14 +5,14 @@ defmodule Pgboard.GameChannel do
     {:ok, socket}
   end
 
-  def handle_in("update_state", params, socket) do
-    updated_board_state = params["updated_board"]
-    :ok = Pgboard.Game.Board.set(updated_board_state)
-
-    broadcast! socket, "updateBoard", %{
-      board: updated_board_state
-    }
-
-    {:reply, :ok, socket}
-  end
+  # def handle_in("update_state", params, socket) do
+  #   updated_board_state = params["updated_board"]
+  #   :ok = Pgboard.Game.StateAgent.set_state(updated_board_state)
+  # 
+  #   broadcast! socket, "updateBoard", %{
+  #     board: updated_board_state
+  #   }
+  #
+  #   {:reply, :ok, socket}
+  # end
 end
