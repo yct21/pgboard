@@ -1,6 +1,7 @@
 defmodule Pgboard.Game.Arbiter do
   @moduledoc """
-  This module is to handle player moves by routing it to corresponding map module.
+  This module is to handle player moves by routing it to corresponding map module,
+  while providing basic rule handler for every map.
 
   Method `handle_move` is defined in macro `game_map`.
 
@@ -11,6 +12,6 @@ defmodule Pgboard.Game.Arbiter do
 
   use Pgboard.Game.BoardMap.Plug
 
-  game_map Pgboard.Game.Maps.Germany
-  game_map Pgboard.Game.Maps.Usa
+  game_map Pgboard.Game.GermanyMap
+  game_map Pgboard.Game.UsaMap
 end
