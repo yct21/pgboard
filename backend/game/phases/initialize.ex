@@ -11,7 +11,7 @@ defmodule Pgboard.Game.InitializePhase do
     {:ok, new_board_state, new_card_deck, logs_to_append}
   """
   def handle_move(_, _, %{players: players, board_map: board_map}) do
-
+    card_deck = Pgboard.Game.CardDeck.basic_deck
   end
 
   # defp
