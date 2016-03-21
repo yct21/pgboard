@@ -1,3 +1,3 @@
-defmodule Pgzealot.PageViewTest do
-  use Pgzealot.ConnCase, async: true
+defmodule Pgboard.PageViewTest do
+  use Pgboard.ConnCase, async: true
 end

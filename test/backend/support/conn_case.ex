@@ -1,4 +1,4 @@
-defmodule Pgzealot.ConnCase do
+defmodule Pgboard.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -20,20 +20,20 @@ defmodule Pgzealot.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
 
-      alias Pgzealot.Repo
+      alias Pgboard.Repo
       import Ecto.Model
       import Ecto.Query, only: [from: 2]
 
-      import Pgzealot.Router.Helpers
+      import Pgboard.Router.Helpers
 
       # The default endpoint for testing
-      @endpoint Pgzealot.Endpoint
+      @endpoint Pgboard.Endpoint
     end
   end
 
   setup tags do
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Pgzealot.Repo, [])
+      Ecto.Adapters.SQL.restart_test_transaction(Pgboard.Repo, [])
     end
 
     :ok

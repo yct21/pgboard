@@ -1,5 +1,5 @@
-defmodule Pgzealot.PageControllerTest do
-  use Pgzealot.ConnCase
+defmodule Pgboard.PageControllerTest do
+  use Pgboard.ConnCase
 
   # test "GET /" do
   #   conn = get conn(), "/"

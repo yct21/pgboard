@@ -1,4 +1,4 @@
-defmodule Pgzealot.ChannelCase do
+defmodule Pgboard.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -20,19 +20,19 @@ defmodule Pgzealot.ChannelCase do
       # Import conveniences for testing with channels
       use Phoenix.ChannelTest
 
-      alias Pgzealot.Repo
+      alias Pgboard.Repo
       import Ecto.Model
       import Ecto.Query, only: [from: 2]
 
 
       # The default endpoint for testing
-      @endpoint Pgzealot.Endpoint
+      @endpoint Pgboard.Endpoint
     end
   end
 
   setup tags do
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Pgzealot.Repo, [])
+      Ecto.Adapters.SQL.restart_test_transaction(Pgboard.Repo, [])
     end
 
     :ok

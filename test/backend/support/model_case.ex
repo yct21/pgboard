@@ -1,4 +1,4 @@
-defmodule Pgzealot.ModelCase do
+defmodule Pgboard.ModelCase do
   @moduledoc """
   This module defines the test case to be used by
   model tests.
@@ -16,16 +16,16 @@ defmodule Pgzealot.ModelCase do
 
   using do
     quote do
-      alias Pgzealot.Repo
+      alias Pgboard.Repo
       import Ecto.Model
       import Ecto.Query, only: [from: 2]
-      import Pgzealot.ModelCase
+      import Pgboard.ModelCase
     end
   end
 
   setup tags do
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Pgzealot.Repo, [])
+      Ecto.Adapters.SQL.restart_test_transaction(Pgboard.Repo, [])
     end
 
     :ok
@@ -39,12 +39,12 @@ defmodule Pgzealot.ModelCase do
   Given a User model that lists `:name` as a required field and validates
   `:password` to be safe, it would return:
 
-      iex> errors_on(%User{}, password: "password")
+      iex> errors_on(%User{}, %{password: "password"})
       [password: "is unsafe", name: "is blank"]
 
   You could then write your assertion like:
 
-      assert {:password, "is unsafe"} in errors_on(%User{}, password: "password")
+      assert {:password, "is unsafe"} in errors_on(%User{}, %{password: "password"})
 
   You can also create the changeset manually and retrieve the errors
   field directly:
