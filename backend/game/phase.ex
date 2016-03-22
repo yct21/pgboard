@@ -3,34 +3,49 @@ defmodule Pgboard.Game.Phase do
   Macros for each phase.
   """
 
-  defmacro __using__(_opts) do
+  defmacro __using__([name: phase_name]) do
     quote do
       Module.register_attribute __MODULE__, :specific_rule_for, accumulate: true
       import unquote(__MODULE__), only: [subphase: 2]
+      @phase_name unquote(phase_name)
     end
   end
 
+  @doc """
+  Defines subphases for Module phase.
+
+  Following functions are appended in this macro:
+  - `subphase_name({:error, reason})` for error handling
+  - `subphase_name({:ok, %{map: map} = board_state, logs_to_append})` when specific rule is applied.
+  - `subphase_name({:ok, board_state, logs_to_append})` when no specific rule is applied`.
+  """
   defmacro subphase(phase_name, do: block) do
-    escaped_block = Macro.escape(Macro.escape block)
+    escaped_block = Macro.escape(block)
 
     quote bind_quoted: [phase_name: phase_name, escaped_block: escaped_block] do
       # Do nothing but pass the fault reason when fails in previous subphase.
       defp unquote(phase_name)({:error, reason}), do: {:error, reason}
 
+      # Specific rule applied.
       Enum.each @specific_rule_for, fn({map, description}) ->
         specific_rule_block = Pgboard.Game.Phase.get_specific_rule(map, description)
 
-        defp unquote(phase_name)({:ok, %{map: map}=current_board_state, logs_to_append})
+        defp unquote(phase_name)({:ok, %{map: map} = var!(board_state), var!(logs_to_append)})
           when map == unquote(map), do: unquote(specific_rule_block)
       end
 
-      defp unquote(phase_name)({:ok, %{map: map}=current_board_state, logs_to_append}), do: unquote(escaped_block)
+      # No specific rule applied.
+      defp unquote(phase_name)({:ok, var!(board_state), var!(logs_to_append)}), do: unquote(escaped_block)
 
       Module.delete_attribute __MODULE__, :specific_rule_for
     end
   end
 
   defmodule Plug do
+    @moduledoc """
+    Plug a phase into Game Arbiter.
+    """
+
     defmacro __using__(_opt) do
       quote do
         import unquote(__MODULE__), only: [game_phase: 1]
@@ -39,14 +54,13 @@ defmodule Pgboard.Game.Phase do
 
     defmacro game_phase(phase_module) do
       phase_name = get_phase_name_from_module(phase_module)
-      # def escape_self_twice_to_put_in_a_macro_with_bind_quoted_that_defines_a_function(any_term)
-      phase_module = Macro.escape(Macro.escape phase_module)
+      phase_module = Macro.escape(phase_module)
 
       quote bind_quoted: [phase_name: phase_name, phase_module: phase_module] do
-        def handle_move(%{current_phase: current_phase} = current_board_state, current_move)
+        def handle_move(current_board_state, %{current_phase: current_phase} = current_move)
           when current_phase == unquote(phase_name) do
-          Map.put current_board_state, :current_move, current_move
-          unquote(phase_module).handle_move(current_board_state)
+          board_state = Map.put current_board_state, :current_move, current_move
+          unquote(phase_module).handle_move(board_state)
         end
       end
     end

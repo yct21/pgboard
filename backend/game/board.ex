@@ -2,21 +2,24 @@ defmodule Pgboard.Game.Board do
   @moduledoc """
   This module defines helper methods for board state.
 
+  ```
   board: %{
-    current_step,
-    current_phase,
+    game_step,
     card_deck,
     current_move: {
       player,
+      current_phase,
       payload
     },
     map: "germany",
     map_module: Pgboard.Game.GermanyMap,
+    player_order,
+    table_order,
     players: %{
       player_id => %{
         name,
-        id,
         avatar,
+        color,
         plants,
         resources
       }
@@ -34,6 +37,7 @@ defmodule Pgboard.Game.Board do
       city_name: [owners] / :banned / :not_selected / :selected
     }
   }
+  ```
   """
 
 
