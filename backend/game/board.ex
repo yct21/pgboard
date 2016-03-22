@@ -1,13 +1,17 @@
 defmodule Pgboard.Game.Board do
   @moduledoc """
-  This module defines helper methods for board state
+  This module defines helper methods for board state.
 
   board: %{
     current_step,
-    current_player,
     current_phase,
     card_deck,
+    current_move: {
+      player,
+      payload
+    },
     map: "germany",
+    map_module: Pgboard.Game.GermanyMap,
     players: %{
       player_id => %{
         name,

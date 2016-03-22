@@ -6,26 +6,27 @@ defmodule Pgboard.Game.Phase do
   defmacro __using__(_opts) do
     quote do
       Module.register_attribute __MODULE__, :specific_rule_for, accumulate: true
-      import unquote(__MODULE__), only: [subphase: 3]
+      import unquote(__MODULE__), only: [subphase: 2]
     end
   end
 
-  defmacro subphase(phase_name, params \\ {}, do: block) do
-    escaped_params = Macro.escape(params)
-    escaped_block = Macro.escape(block)
+  defmacro subphase(phase_name, do: block) do
+    escaped_block = Macro.escape(Macro.escape block)
 
-    quote bind_quoted: [phase_name: phase_name, escaped_params: escaped_params, escaped_block: escaped_block] do
-      Enum.each @special_rule_for, fn({map, description}) ->
-        {special_rule_params, special_rule_block} = Pgboard.Game.Phase.get_specific_rule(map, description)
+    quote bind_quoted: [phase_name: phase_name, escaped_block: escaped_block] do
+      # Do nothing but pass the fault reason when fails in previous subphase.
+      defp unquote(phase_name)({:error, reason}), do: {:error, reason}
 
-        # if unquote(params) != special_rule_params do
-        #   raise "parameter in the special rule doesn't match common"
-        # end
-        # IO.inspect {special_rule_params, special_rule_block}
-        defp unquote(phase_name)(map, unquote(escaped_params)) when map == :usa, do: unquote(special_rule_block)
+      Enum.each @specific_rule_for, fn({map, description}) ->
+        specific_rule_block = Pgboard.Game.Phase.get_specific_rule(map, description)
+
+        defp unquote(phase_name)({:ok, %{map: map}=current_board_state, logs_to_append})
+          when map == unquote(map), do: unquote(specific_rule_block)
       end
 
-      defp unquote(phase_name)(map, unquote(escaped_params)), do: unquote(escaped_block)
+      defp unquote(phase_name)({:ok, %{map: map}=current_board_state, logs_to_append}), do: unquote(escaped_block)
+
+      Module.delete_attribute __MODULE__, :specific_rule_for
     end
   end
 
@@ -42,10 +43,10 @@ defmodule Pgboard.Game.Phase do
       phase_module = Macro.escape(Macro.escape phase_module)
 
       quote bind_quoted: [phase_name: phase_name, phase_module: phase_module] do
-        def handle_move(%{current_phase: current_phase} = current_board_state, move)
+        def handle_move(%{current_phase: current_phase} = current_board_state, current_move)
           when current_phase == unquote(phase_name) do
-          map_module = get_map_module(current_board_state.map)
-          unquote(phase_module).handle_move(current_board_state, map_module, move)
+          Map.put current_board_state, :current_move, current_move
+          unquote(phase_module).handle_move(current_board_state)
         end
       end
     end

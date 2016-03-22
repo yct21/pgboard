@@ -1,25 +1,24 @@
 defmodule Pgboard.Game.InitializePhase do
+  use Pgboard.Game.Phase
+
   @moduledoc """
   This module initializes a game with basic rule.
   """
 
   @doc """
   Initialize board and card deck.
-  Parameters does not matter.
+  ~~Parameters does not matter.~~
 
   returns:
-    {:ok, new_board_state, new_card_deck, logs_to_append}
+    {:ok, new_board_state, logs_to_append}
+    {:error, reason}
   """
-  def handle_move(_, _map_module, %{players: players, board_map: board_map}) do
-    card_deck = Pgboard.Game.CardDeck.basic_deck
-    board = initialize_board(players, board_map, card_deck)
+  def handle_move(current_board_state, map_module) do
+    {:ok, current_board_state, map_module, []}
+    |> initialize_players
   end
 
-  # subphase intialize_bard
-  defp initialize_board(players, board_map, card_deck) do
-    # deal with players
-    # plant market and card deck
-    # resources
-    # cities
+  subphase :initialize_players do
+
   end
 end

@@ -6,7 +6,7 @@ defmodule Pgboard.Game.BoardMap do
   defmacro __using__(_opt) do
     quote do
       alias unquote(__MODULE__)
-      import unquote(__MODULE__), only: [specific_rule: 3, city: 2, tunnel: 3]
+      import unquote(__MODULE__), only: [specific_rule: 2, city: 2, tunnel: 3]
 
       Module.register_attribute __MODULE__, :cities, accumulate: true
       Module.register_attribute __MODULE__, :tunnels, accumulate: true
@@ -37,12 +37,11 @@ defmodule Pgboard.Game.BoardMap do
   @doc """
   Specific rule for current map.
   """
-  defmacro specific_rule(description, params, [do: block]) do
+  defmacro specific_rule(description, [do: block]) do
     rule_name = :"specific rule: #{description}"
-    params = Macro.escape(params)
     block = Macro.escape(block)
     quote bind_quoted: binding do
-      @specific_rules {rule_name, {params, block}}
+      @specific_rules {rule_name, block}
     end
   end
 
