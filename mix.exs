@@ -24,7 +24,7 @@ defmodule Pgboard.Mixfile do
   end
 
   # Specifies which paths to compile per environment.
-  defp elixirc_paths(:test), do: ["lib", "backend", "test/support"]
+  defp elixirc_paths(:test), do: ["lib", "backend", "test/backend/support"]
   defp elixirc_paths(_),     do: ["lib", "backend"]
 
   # Specifies your project dependencies.

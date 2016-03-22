@@ -3,7 +3,7 @@ defmodule Pgboard.GameController do
   use Pgboard.Web, :controller
 
   def index(conn, _params) do
-    initial_data = Pgboard.Game.StateAgent.get_current_state()
+    initial_data = Pgboard.Game.StateAgent.get_current_board()
 
     render conn, "index.html", initial_data: Poison.encode!(initial_data)
   end

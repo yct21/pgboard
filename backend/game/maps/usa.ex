@@ -3,47 +3,47 @@ defmodule Pgboard.Game.UsaMap do
 
   # cities
   city :seattle, color: :purple
-  # city :portland, color: :purple
-  # city :boise, color: :purple
-  # city :billings, color: :purple
-  # city :cheyenne, color: :purple
-  # city :denver, color: :purple
-  # city :omaha, color: :purple
-  # city :fargo, color: :red
-  # city :duluth, color: :red
-  # city :minneapolis, color: :red
-  # city :chicago, color: :red
-  # city :stLouis, color: :red
-  # city :cincinnati, color: :red
-  # city :knoxville, color: :red
-  # city :detroit, color: :blue
-  # city :buffalo, color: :blue
-  # city :pittsburgh, color: :blue
-  # city :washington, color: :blue
-  # city :philadelphia, color: :blue
-  # city :newYork, color: :blue
-  # city :boston, color: :blue
-  # city :sanFrancisco, color: :pink
-  # city :saltLakeCity, color: :pink
-  # city :lasVegas, color: :pink
-  # city :santaFe, color: :pink
-  # city :losAngeles, color: :pink
-  # city :sanDiego, color: :pink
-  # city :phoenix, color: :pink
-  # city :kansasCity, color: :orange
-  # city :oklahomaCity, color: :orange
-  # city :dallas, color: :orange
-  # city :houston, color: :orange
-  # city :memphis, color: :orange
-  # city :newOrleans, color: :orange
-  # city :birmingham, color: :orange
-  # city :atlanta, color: :black
-  # city :raleigh, color: :black
-  # city :norfolk, color: :black
-  # city :savannah, color: :black
-  # city :jacksonville, color: :black
-  # city :tampa, color: :black
-  # city :miami, color: :black
+  city :portland, color: :purple
+  city :boise, color: :purple
+  city :billings, color: :purple
+  city :cheyenne, color: :purple
+  city :denver, color: :purple
+  city :omaha, color: :purple
+  city :fargo, color: :red
+  city :duluth, color: :red
+  city :minneapolis, color: :red
+  city :chicago, color: :red
+  city :stLouis, color: :red
+  city :cincinnati, color: :red
+  city :knoxville, color: :red
+  city :detroit, color: :blue
+  city :buffalo, color: :blue
+  city :pittsburgh, color: :blue
+  city :washington, color: :blue
+  city :philadelphia, color: :blue
+  city :newYork, color: :blue
+  city :boston, color: :blue
+  city :sanFrancisco, color: :pink
+  city :saltLakeCity, color: :pink
+  city :lasVegas, color: :pink
+  city :santaFe, color: :pink
+  city :losAngeles, color: :pink
+  city :sanDiego, color: :pink
+  city :phoenix, color: :pink
+  city :kansasCity, color: :orange
+  city :oklahomaCity, color: :orange
+  city :dallas, color: :orange
+  city :houston, color: :orange
+  city :memphis, color: :orange
+  city :newOrleans, color: :orange
+  city :birmingham, color: :orange
+  city :atlanta, color: :black
+  city :raleigh, color: :black
+  city :norfolk, color: :black
+  city :savannah, color: :black
+  city :jacksonville, color: :black
+  city :tampa, color: :black
+  city :miami, color: :black
 
   # tunnels
   tunnel :seattle, :portland, 3

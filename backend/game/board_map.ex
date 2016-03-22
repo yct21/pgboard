@@ -3,29 +3,30 @@ defmodule Pgboard.Game.BoardMap do
   Macros for each map.
   """
 
-  defmacro __using__(_opts) do
+  defmacro __using__(_opt) do
     quote do
       alias unquote(__MODULE__)
-      import unquote(__MODULE__), only: [specific_rule: 2, city: 2, tunnel: 3]
+      import unquote(__MODULE__), only: [specific_rule: 3, city: 2, tunnel: 3]
 
       Module.register_attribute __MODULE__, :cities, accumulate: true
       Module.register_attribute __MODULE__, :tunnels, accumulate: true
+      Module.register_attribute __MODULE__, :specific_rules, accumulate: true
 
       @before_compile unquote(__MODULE__)
     end
   end
 
   @doc """
-  Cities in the map
+  Cities in the map.
   """
   defmacro city(name, attributes) do
     quote do
-      @cities {unquote(name), unquote(attributes)}
+      @cities {unquote(name), Enum.into(unquote(attributes), %{})}
     end
   end
 
   @doc """
-  Tunnels that connects two cities
+  Tunnels that connects two cities.
   """
   defmacro tunnel(city1, city2, cost) do
     quote do
@@ -36,46 +37,58 @@ defmodule Pgboard.Game.BoardMap do
   @doc """
   Specific rule for current map.
   """
-  defmacro specific_rule(condition, do: handler) do
-    quote do
-      def handle_move(var!(current_board_state), var!(current_card_deck), var!(move))
-        when unquote(condition),
-        do: unquote(handler)
+  defmacro specific_rule(description, params, [do: block]) do
+    rule_name = :"specific rule: #{description}"
+    params = Macro.escape(params)
+    block = Macro.escape(block)
+    quote bind_quoted: binding do
+      @specific_rules {rule_name, {params, block}}
     end
   end
 
   @doc """
-  Define some functions before a map module is compiled
+  Define several functions before a map module is compiled.
+
+  - `cities`
+  - `tunnels`
+  - `get_specific_rule(description)`
   """
-  defmacro __before_compile__(_env) do
-    quote do
-      # Fall back to use common rule handler when none of specific rule in this map should be applied.
-      def handle_move(current_board_state, current_card_deck, move) do
-        Pgboard.Game.Arbiter.basic_rule_handler(current_board_state, current_card_deck, move)
-      end
+  defmacro __before_compile__(%{module: map_module}) do
+    # Escape twice since both bind_quoted and unquote phrase would evaluate an expression.
+    # Though confusing to read but still necessary since unquote phrase is needed when define methods in quote.
+    # Macros are confusing anyway. ┑(￣Д ￣)┍
+    cities =
+      map_module
+      |> Module.get_attribute(:cities)
+      |> Enum.into(%{})
+      |> Macro.escape
+      |> Macro.escape
 
-      @registered_cities Enum.into @cities, %{}
-      def cities do
-        @registered_cities
-      end
+    tunnels =
+      map_module
+      |> Module.get_attribute(:tunnels)
+      |> transform_tunnels
+      |> Macro.escape
+      |> Macro.escape
 
-      @registered_tunnels unquote(__MODULE__).transform_tunnels(@tunnels)
-      def tunnels do
-        @registered_tunnels
+    quote bind_quoted: [cities: cities, tunnels: tunnels] do
+      def cities, do: unquote(cities)
+      def tunnels, do: unquote(tunnels)
+
+      def get_specific_rule(description) do
+        rule_name = :"specific rule: #{description}"
+        Keyword.fetch!(@specific_rules, rule_name)
       end
     end
   end
 
   # Turn the array into connected list for the convenience of dijkstra.
-  def transform_tunnels(tunnels) do
-    connect_list = %{}
-
-    Enum.each tunnels, fn({city1, city2, cost}) ->
-      Map.update connect_list, city1, [], &([{city2, cost} | &1])
-      Map.update connect_list, city2, [], &([{city1, cost} | &1])
+  defp transform_tunnels(tunnels) do
+    Enum.reduce tunnels, %{}, fn({city1, city2, cost}, connected_list) ->
+      connected_list
+      |> Map.update(city1, [{city2, cost}], &([{city2, cost} | &1]))
+      |> Map.update(city2, [{city1, cost}], &([{city1, cost} | &1]))
     end
-
-    connect_list
   end
 
   defmodule Plug do
@@ -86,16 +99,39 @@ defmodule Pgboard.Game.BoardMap do
     defmacro __using__(_opts) do
       quote do
         import unquote(__MODULE__), only: [game_map: 1]
+        Module.register_attribute __MODULE__, :maps, accumulate: true
+
+        @before_compile unquote(__MODULE__)
       end
     end
 
+    @doc """
+    Record module name and its map name.
+
+    @game_map {Pgboard.Game.UsaMap, :usa}
+    """
     defmacro game_map(map_module_name) do
       map_name = get_map_name_from_module(map_module_name)
 
-      quote do
-        def handle_move(%{map: current_map} = current_board_state, current_card_deck, move)
-          when current_map == unquote(map_name) do
-            unquote(map_module_name).handle_move(current_board_state, current_card_deck, move)
+      quote bind_quoted: [map_name: map_name, map_module_name: map_module_name] do
+        @maps {map_name, map_module_name}
+      end
+    end
+
+    @doc """
+    Add `get_map_module(map_name)` to Arbiter
+    """
+    defmacro __before_compile__(%{module: arbiter_module}) do
+      maps =
+        arbiter_module
+        |> Module.get_attribute(:maps)
+        |> Enum.into(%{})
+        |> Macro.escape
+        |> Macro.escape
+
+      quote bind_quoted: [maps: maps] do
+        def get_map_module(map) do
+          Map.fetch! unquote(maps), map
         end
       end
     end
@@ -106,7 +142,9 @@ defmodule Pgboard.Game.BoardMap do
       name_atom_list
       |> List.last
       |> Atom.to_string
+      |> String.replace_suffix("Map", "")
       |> String.downcase
+      |> String.to_atom
     end
   end
 end
