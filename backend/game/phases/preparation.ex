@@ -22,6 +22,7 @@ defmodule Pgboard.Game.PreparationPhase do
     |> handle_map_module
     |> handle_initialize_players
     |> handle_initialize_player_order
+    |> handle_initialize_card_deck
   end
 
   # Put map module to the board
@@ -37,7 +38,7 @@ defmodule Pgboard.Game.PreparationPhase do
     {:ok, board_state, logs_to_append}
   end
 
-  # Initialize players in board
+  # Initialize players in board.
   subphase :handle_initialize_players do
     player_amount = Enum.count board_state.current_move.players
     player_colors = Enum.take_random [:purple, :red, :blue, :pink, :orange, :black], player_amount
@@ -61,6 +62,15 @@ defmodule Pgboard.Game.PreparationPhase do
 
     board_state = Map.put(board_state, :player_order, initial_order)
     board_state = Map.put(board_state, :table_order, initial_order)
+
+    {:ok, board_state, logs_to_append}
+  end
+
+  subphase :handle_initialize_card_deck do
+    player_amount = Enum.count board_state.players
+    card_deck = Pgboard.Game.CardDeck.basic_deck(player_amount)
+
+    board_state = Map.put board_state, :card_deck, card_deck
 
     {:ok, board_state, logs_to_append}
   end

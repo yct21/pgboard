@@ -1,5 +1,6 @@
 defmodule Pgboard.Game.PreparationPhaseTest do
   use ExUnit.Case, async: true
+  @total_cards 43
 
   setup %{player_amount: player_amount} do
     map = :usa
@@ -27,6 +28,7 @@ defmodule Pgboard.Game.PreparationPhaseTest do
     test_map_module(board_state)
     test_players(board_state)
     test_player_order(board_state)
+    test_card_deck(board_state)
   end
 
   defp test_map_module(board_state) do
@@ -44,6 +46,7 @@ defmodule Pgboard.Game.PreparationPhaseTest do
     # Check players initialized with players in current_move
     Enum.each board_state.current_move.players, fn({player_id, name, avatar}) ->
       player = players[player_id]
+
       assert player.name == name
       assert player.avatar == avatar
       assert player.plants == []
@@ -53,7 +56,27 @@ defmodule Pgboard.Game.PreparationPhaseTest do
 
   defp test_player_order(%{players: players, player_order: player_order, table_order: table_order}) do
     player_ids = Map.keys players
+
     assert player_order == table_order
     assert Enum.sort(player_ids) == Enum.sort(player_order)
+  end
+
+  defp test_card_deck(board_state) do
+    player_amount = Enum.count board_state.players
+    card_deck = board_state.card_deck
+    card_amount_to_remove = %{3 => 8, 4 =>  4, 5 => 0, 6 => 0}
+
+    assert Enum.count(card_deck) == @total_cards - card_amount_to_remove[player_amount]
+    assert Enum.take(card_deck, 9) == [3, 4, 5, 6, 7, 8, 9, 10, 13]
+    assert List.last(card_deck) == :step3
+    assert Enum.uniq(card_deck) == card_deck
+
+    Enum.each card_deck, fn(card) ->
+      cond do
+        is_atom(card) -> assert card == :step3
+        is_integer(card) -> assert(card >= 3 && card <= 50 && not(card in [41, 43, 45, 47, 48, 49]))
+        true -> refute true
+      end
+    end
   end
 end
