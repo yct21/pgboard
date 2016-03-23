@@ -41,6 +41,7 @@ defmodule Pgboard.Mixfile do
       {:cowboy, "~> 1.0"},
       {:exredis, ">= 0.1.1"},
       {:comeonin, "~> 2.0"},
+      {:short_maps, "~> 0.1.1"},
       {:mix_test_watch, "~> 0.2", only: :dev}
     ]
   end
