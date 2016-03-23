@@ -122,10 +122,16 @@ defmodule Pgboard.Game.PreparationPhase do
       current_phase: :pick_region
     }
 
+    map_name_in_log =
+      board_state.map
+      |> Atom.to_string
+      |> String.upcase
+    log = {:system, "Setup board with #{map_name_in_log} map."}
+
     board_state = Map.put(board_state, :game_step, 1)
     board_state = Map.put(board_state, :expected_move, expected_move)
 
-    {:ok, board_state, logs_to_append}
+    {:ok, board_state, logs_to_append ++ [log]}
   end
 
   defp process_player({{id, name, avatar}, color}) do

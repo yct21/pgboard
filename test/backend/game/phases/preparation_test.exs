@@ -19,12 +19,27 @@ defmodule Pgboard.Game.PreparationPhaseTest do
     {:ok, %{board_state: board_state, logs_to_append: logs_to_append}}
   end
 
+  @tag player_amount: 3
+  test "board is initialized properly with 3 players", %{board_state: board_state, logs_to_append: logs_to_append} do
+    test_by_player_amount(board_state, logs_to_append, 3)
+  end
+
   @tag player_amount: 4
   test "board is initialized properly with 4 players", %{board_state: board_state, logs_to_append: logs_to_append} do
     test_by_player_amount(board_state, logs_to_append, 4)
   end
 
-  defp test_by_player_amount(board_state, _logs_to_append, _player_amount) do
+  @tag player_amount: 5
+  test "board is initialized properly with 5 players", %{board_state: board_state, logs_to_append: logs_to_append} do
+    test_by_player_amount(board_state, logs_to_append, 5)
+  end
+
+  @tag player_amount: 6
+  test "board is initialized properly with 6 players", %{board_state: board_state, logs_to_append: logs_to_append} do
+    test_by_player_amount(board_state, logs_to_append, 6)
+  end
+
+  defp test_by_player_amount(board_state, logs_to_append, _player_amount) do
     test_map_module(board_state)
     test_players(board_state)
     test_player_order(board_state)
@@ -33,6 +48,7 @@ defmodule Pgboard.Game.PreparationPhaseTest do
     test_resource_market(board_state)
     test_cities(board_state)
     test_preparation_for_next_phase(board_state)
+    test_appended_log(logs_to_append)
   end
 
   defp test_map_module(board_state) do
@@ -112,5 +128,9 @@ defmodule Pgboard.Game.PreparationPhaseTest do
     assert board_state.game_step == 1
     assert expected_move.player == List.first(board_state.player_order)
     assert expected_move.current_phase == :pick_region
+  end
+
+  defp test_appended_log(logs_to_append) do
+    assert [{:system, "Setup board with USA map."}] == logs_to_append
   end
 end
