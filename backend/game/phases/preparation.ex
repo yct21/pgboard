@@ -27,6 +27,8 @@ defmodule Pgboard.Game.PreparationPhase do
     |> handle_initialize_card_deck
     |> handle_initialize_plant_market
     |> handle_initialize_resource_market
+    |> handle_initialize_cities
+    |> handle_expected_move
   end
 
   subphase :handle_map_module do
@@ -100,6 +102,28 @@ defmodule Pgboard.Game.PreparationPhase do
   subphase :handle_initialize_resource_market do
     resource_market = @default_initial_resources
     board_state = Map.put(board_state, :resource_market, resource_market)
+
+    {:ok, board_state, logs_to_append}
+  end
+
+  subphase :handle_initialize_cities do
+    cities =
+      board_state.map_module.cities
+      |> Enum.map(fn({city_name, _city_props}) -> {city_name, :not_selected} end)
+      |> Enum.into(%{})
+
+    board_state = Map.put(board_state, :cities, cities)
+    {:ok, board_state, logs_to_append}
+  end
+
+  subphase :handle_expected_move do
+    expected_move = %{
+      player: List.first(board_state.player_order),
+      current_phase: :pick_region
+    }
+
+    board_state = Map.put(board_state, :game_step, 1)
+    board_state = Map.put(board_state, :expected_move, expected_move)
 
     {:ok, board_state, logs_to_append}
   end

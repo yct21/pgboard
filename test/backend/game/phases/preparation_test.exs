@@ -31,6 +31,8 @@ defmodule Pgboard.Game.PreparationPhaseTest do
     test_card_deck(board_state)
     test_plant_market(board_state)
     test_resource_market(board_state)
+    test_cities(board_state)
+    test_preparation_for_next_phase(board_state)
   end
 
   defp test_map_module(board_state) do
@@ -94,5 +96,21 @@ defmodule Pgboard.Game.PreparationPhaseTest do
     assert resource_market.oil == 18
     assert resource_market.garbage == 6
     assert resource_market.uranium == 2
+  end
+
+  defp test_cities(%{cities: cities}) do
+    Enum.each cities, fn({city, state}) ->
+      assert(city in Map.keys(Pgboard.Game.UsaMap.cities))
+      assert state == :not_selected
+    end
+  end
+
+  # current step and expected move
+  defp test_preparation_for_next_phase(board_state) do
+    expected_move = board_state.expected_move
+
+    assert board_state.game_step == 1
+    assert expected_move.player == List.first(board_state.player_order)
+    assert expected_move.current_phase == :pick_region
   end
 end

@@ -6,7 +6,7 @@ defmodule Pgboard.Game.Board do
   board: %{
     game_step,
     card_deck,
-    current_move: {
+    current_move/expected_move: {
       player,
       current_phase,
       payload
