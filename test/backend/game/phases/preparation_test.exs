@@ -30,6 +30,7 @@ defmodule Pgboard.Game.PreparationPhaseTest do
     test_player_order(board_state)
     test_card_deck(board_state)
     test_plant_market(board_state)
+    test_resource_market(board_state)
   end
 
   defp test_map_module(board_state) do
@@ -86,5 +87,12 @@ defmodule Pgboard.Game.PreparationPhaseTest do
     assert plant_market.future_plants == [7, 8, 9, 10]
     assert plant_market.plant_for_auction == nil
     assert plant_market.bid_table == Enum.into(Enum.map(players, fn({id, _}) -> {id, nil} end), %{})
+  end
+
+  defp test_resource_market(%{resource_market: resource_market}) do
+    assert resource_market.coal == 24
+    assert resource_market.oil == 18
+    assert resource_market.garbage == 6
+    assert resource_market.uranium == 2
   end
 end

@@ -1,6 +1,4 @@
 defmodule Pgboard.Game.PreparationPhase do
-  use Pgboard.Game.Phase, name: :preparation
-
   @moduledoc """
   This module initializes a game with basic rule.
   """
@@ -17,6 +15,10 @@ defmodule Pgboard.Game.PreparationPhase do
     {:ok, new_board_state, logs_to_append}
     {:error, reason}
   """
+
+  use Pgboard.Game.Phase, name: :preparation
+  @default_initial_resources %{coal: 24, oil: 18, garbage: 6, uranium: 2}
+
   def handle_move(board_state) do
     {:ok, board_state, []}
     |> handle_map_module
@@ -24,6 +26,7 @@ defmodule Pgboard.Game.PreparationPhase do
     |> handle_initialize_player_order
     |> handle_initialize_card_deck
     |> handle_initialize_plant_market
+    |> handle_initialize_resource_market
   end
 
   subphase :handle_map_module do
@@ -90,6 +93,13 @@ defmodule Pgboard.Game.PreparationPhase do
     card_deck = Enum.slice(card_deck, 8..Enum.count(card_deck))
     board_state = Map.put(board_state, :card_deck, card_deck)
     board_state = Map.put(board_state, :plant_market, plant_market)
+
+    {:ok, board_state, logs_to_append}
+  end
+
+  subphase :handle_initialize_resource_market do
+    resource_market = @default_initial_resources
+    board_state = Map.put(board_state, :resource_market, resource_market)
 
     {:ok, board_state, logs_to_append}
   end
