@@ -17,5 +17,5 @@ defmodule Pgboard.Game.Arbiter do
   game_map Pgboard.Game.GermanyMap
   game_map Pgboard.Game.UsaMap
 
-  game_phase Pgboard.Game.InitializePhase
+  game_phase Pgboard.Game.PreparationPhase
 end
