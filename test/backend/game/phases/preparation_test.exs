@@ -29,6 +29,7 @@ defmodule Pgboard.Game.PreparationPhaseTest do
     test_players(board_state)
     test_player_order(board_state)
     test_card_deck(board_state)
+    test_plant_market(board_state)
   end
 
   defp test_map_module(board_state) do
@@ -66,17 +67,24 @@ defmodule Pgboard.Game.PreparationPhaseTest do
     card_deck = board_state.card_deck
     card_amount_to_remove = %{3 => 8, 4 =>  4, 5 => 0, 6 => 0}
 
-    assert Enum.count(card_deck) == @total_cards - card_amount_to_remove[player_amount]
-    assert Enum.take(card_deck, 9) == [3, 4, 5, 6, 7, 8, 9, 10, 13]
+    assert Enum.count(card_deck) == @total_cards - card_amount_to_remove[player_amount] - 8
+    assert List.first(card_deck) == 13
     assert List.last(card_deck) == :step3
     assert Enum.uniq(card_deck) == card_deck
 
     Enum.each card_deck, fn(card) ->
       cond do
         is_atom(card) -> assert card == :step3
-        is_integer(card) -> assert(card >= 3 && card <= 50 && not(card in [41, 43, 45, 47, 48, 49]))
+        is_integer(card) -> assert(card >= 11 && card <= 50 && not(card in [41, 43, 45, 47, 48, 49]))
         true -> refute true
       end
     end
+  end
+
+  defp test_plant_market(%{plant_market: plant_market, players: players}) do
+    assert plant_market.available_plants == [3, 4, 5, 6]
+    assert plant_market.future_plants == [7, 8, 9, 10]
+    assert plant_market.plant_for_auction == nil
+    assert plant_market.bid_table == Enum.into(Enum.map(players, fn({id, _}) -> {id, nil} end), %{})
   end
 end

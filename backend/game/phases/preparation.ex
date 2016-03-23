@@ -23,9 +23,9 @@ defmodule Pgboard.Game.PreparationPhase do
     |> handle_initialize_players
     |> handle_initialize_player_order
     |> handle_initialize_card_deck
+    |> handle_initialize_plant_market
   end
 
-  # Put map module to the board
   subphase :handle_map_module do
     %{map: map} = board_state.current_move
     map_module = Pgboard.Game.Arbiter.get_map_module(map)
@@ -38,7 +38,6 @@ defmodule Pgboard.Game.PreparationPhase do
     {:ok, board_state, logs_to_append}
   end
 
-  # Initialize players in board.
   subphase :handle_initialize_players do
     player_amount = Enum.count board_state.current_move.players
     player_colors = Enum.take_random [:purple, :red, :blue, :pink, :orange, :black], player_amount
@@ -54,12 +53,11 @@ defmodule Pgboard.Game.PreparationPhase do
     {:ok, board_state, logs_to_append}
   end
 
-  # Initialize table_order and player_order.
-  # These two are assigned with same sequence at beginning of game.
   subphase :handle_initialize_player_order do
     player_ids = Map.keys board_state.players
     initial_order = Enum.shuffle player_ids
 
+    # table_order and player_order are assigned with same sequence at beginning of game.
     board_state = Map.put(board_state, :player_order, initial_order)
     board_state = Map.put(board_state, :table_order, initial_order)
 
@@ -71,6 +69,27 @@ defmodule Pgboard.Game.PreparationPhase do
     card_deck = Pgboard.Game.CardDeck.basic_deck(player_amount)
 
     board_state = Map.put board_state, :card_deck, card_deck
+
+    {:ok, board_state, logs_to_append}
+  end
+
+  subphase :handle_initialize_plant_market do
+    card_deck = board_state.card_deck
+    bid_table =
+      board_state.players
+      |> Enum.map(fn({player_id, _}) -> {player_id, nil} end)
+      |> Enum.into(%{})
+
+    plant_market = %{
+      available_plants: Enum.slice(card_deck, 0..3),
+      future_plants: Enum.slice(card_deck, 4..7),
+      bid_table: bid_table,
+      plant_for_auction: nil
+    }
+
+    card_deck = Enum.slice(card_deck, 8..Enum.count(card_deck))
+    board_state = Map.put(board_state, :card_deck, card_deck)
+    board_state = Map.put(board_state, :plant_market, plant_market)
 
     {:ok, board_state, logs_to_append}
   end
