@@ -7,6 +7,7 @@ defmodule Pgboard.Game.Phase do
     quote do
       Module.register_attribute __MODULE__, :specific_rule_for, accumulate: true
       import unquote(__MODULE__), only: [subphase: 2]
+      import ShortMaps
       @phase_name unquote(phase_name)
     end
   end
@@ -49,6 +50,7 @@ defmodule Pgboard.Game.Phase do
     defmacro __using__(_opt) do
       quote do
         import unquote(__MODULE__), only: [game_phase: 1]
+        import ShortMaps
       end
     end
 
@@ -57,10 +59,16 @@ defmodule Pgboard.Game.Phase do
       phase_module = Macro.escape(phase_module)
 
       quote bind_quoted: [phase_name: phase_name, phase_module: phase_module] do
-        def handle_move(current_board_state, %{current_phase: current_phase} = current_move)
+        def handle_move(current_board_state, %{current_phase: current_phase, player: player} = current_move)
           when current_phase == unquote(phase_name) do
-          board_state = Map.put current_board_state, :current_move, current_move
-          unquote(phase_module).handle_move(board_state)
+          cond do
+            player != current_board_state.expected_move.player ->
+              {:error, "Not expected player"}
+            true ->
+              board_state = Map.put current_board_state, :current_move, current_move
+              board_state = Map.put current_board_state, :expected_move, nil
+              unquote(phase_module).handle_move(board_state)
+          end
         end
       end
     end
