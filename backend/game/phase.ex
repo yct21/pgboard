@@ -59,14 +59,17 @@ defmodule Pgboard.Game.Phase do
       phase_module = Macro.escape(phase_module)
 
       quote bind_quoted: [phase_name: phase_name, phase_module: phase_module] do
-        def handle_move(current_board_state, %{current_phase: current_phase, player: player} = current_move)
+        def handle_move(current_board_state, %{current_phase: current_phase} = current_move)
           when current_phase == unquote(phase_name) do
           cond do
-            player != current_board_state.expected_move.player ->
+            current_phase != :preparation && current_move.player != current_board_state.expected_move.player ->
               {:error, "Not expected player"}
             true ->
-              board_state = Map.put current_board_state, :current_move, current_move
-              board_state = Map.put current_board_state, :expected_move, nil
+              board_state =
+                current_board_state
+                |> Map.put(:current_move, current_move)
+                |> Map.put(:expected_move, nil)
+
               unquote(phase_module).handle_move(board_state)
           end
         end

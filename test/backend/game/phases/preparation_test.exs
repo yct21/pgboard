@@ -69,6 +69,7 @@ defmodule Pgboard.Game.PreparationPhaseTest do
 
       assert player.name == name
       assert player.avatar == avatar
+      assert player.funds == 0
       assert player.plants == []
       assert player.resources == %{coal: 0, oil: 0, garbage: 0, uranium: 0}
     end
@@ -105,6 +106,7 @@ defmodule Pgboard.Game.PreparationPhaseTest do
     assert plant_market.future_plants == [7, 8, 9, 10]
     assert plant_market.plant_for_auction == nil
     assert plant_market.bid_table == Enum.into(Enum.map(players, fn({id, _}) -> {id, nil} end), %{})
+    assert plant_market.discard_plant_needed == false
   end
 
   defp test_resource_market(%{resource_market: resource_market}) do

@@ -1,10 +1,13 @@
 defmodule Pgboard.Game.PreparationPhase do
   @moduledoc """
-  This module initializes a game with basic rule.
+  This module initializes a game using basic rule.
   """
 
+  use Pgboard.Game.Phase, name: :preparation
+  @default_initial_resources %{coal: 24, oil: 18, garbage: 6, uranium: 2}
+
   @doc """
-  Initialize a game.
+  Set board up.
 
   current_move: %{
     map,
@@ -15,10 +18,6 @@ defmodule Pgboard.Game.PreparationPhase do
     {:ok, new_board_state, logs_to_append}
     {:error, reason}
   """
-
-  use Pgboard.Game.Phase, name: :preparation
-  @default_initial_resources %{coal: 24, oil: 18, garbage: 6, uranium: 2}
-
   def handle_move(board_state) do
     {:ok, board_state, []}
     |> handle_map_module
@@ -63,8 +62,10 @@ defmodule Pgboard.Game.PreparationPhase do
     initial_order = Enum.shuffle player_ids
 
     # table_order and player_order are assigned with same sequence at beginning of game.
-    board_state = Map.put(board_state, :player_order, initial_order)
-    board_state = Map.put(board_state, :table_order, initial_order)
+    board_state =
+      board_state
+      |> Map.put(:player_order, initial_order)
+      |> Map.put(:table_order, initial_order)
 
     {:ok, board_state, logs_to_append}
   end
@@ -89,12 +90,15 @@ defmodule Pgboard.Game.PreparationPhase do
       available_plants: Enum.slice(card_deck, 0..3),
       future_plants: Enum.slice(card_deck, 4..7),
       bid_table: bid_table,
-      plant_for_auction: nil
+      plant_for_auction: nil,
+      discard_plant_needed: false
     }
 
     card_deck = Enum.slice(card_deck, 8..Enum.count(card_deck))
-    board_state = Map.put(board_state, :card_deck, card_deck)
-    board_state = Map.put(board_state, :plant_market, plant_market)
+    board_state =
+      board_state
+      |> Map.put(:card_deck, card_deck)
+      |> Map.put(:plant_market, plant_market)
 
     {:ok, board_state, logs_to_append}
   end
@@ -128,8 +132,10 @@ defmodule Pgboard.Game.PreparationPhase do
       |> String.upcase
     log = {:system, "Setup board with #{map_name_in_log} map."}
 
-    board_state = Map.put(board_state, :game_step, 1)
-    board_state = Map.put(board_state, :expected_move, expected_move)
+    board_state =
+      board_state
+      |> Map.put(:game_step, 1)
+      |> Map.put(:expected_move, expected_move)
 
     {:ok, board_state, logs_to_append ++ [log]}
   end
@@ -142,6 +148,16 @@ defmodule Pgboard.Game.PreparationPhase do
       uranium: 0
     }
 
-    {id, %{name: name, avatar: avatar, color: color, plants: [], resources: initial_resources}}
+    _processed_player = {
+      id,
+      %{
+        name: name,
+        avatar: avatar,
+        color: color,
+        funds: 0,
+        plants: [],
+        resources: initial_resources
+      }
+    }
   end
 end

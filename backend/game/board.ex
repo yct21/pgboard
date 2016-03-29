@@ -20,6 +20,7 @@ defmodule Pgboard.Game.Board do
         name,
         avatar,
         color,
+        funds,
         plants,
         resources
       }
@@ -28,7 +29,8 @@ defmodule Pgboard.Game.Board do
       available_market: [3, 4, 5, 6],
       future_market: [7, 8, 9,10],
       plant_for_auction: 5,
-      bid_table: %{player_id: bid_offer}
+      bid_table: %{player_id: bid_offer},
+      discard_plant_needed: true/false
     },
     resource_market: %{
       resource: amount
