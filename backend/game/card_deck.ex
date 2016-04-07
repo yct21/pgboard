@@ -79,11 +79,12 @@ defmodule Pgboard.Game.CardDeck do
 
   @doc """
   Refills the market when any cards is taken.
-  According to the rule, any plant in market should have id more than max plant amount of any player.
+  According to the rule, any plant in market should have id more than city amount of any player.
+  Besides, when step3 card appears, remaining cards should be shuffled.
 
   Returns processed {available_market, future_market, card_deck}.
   """
-  def refill_market(plant_market, card_deck, available_amount, future_amount, max_plant_amount) do
+  def refill_market(plant_market, card_deck, available_amount, future_amount, board_cities) do
     market_plants = plant_market.available_market ++ plant_market.future_market
     market_plants_amount = available_amount + future_amount
     refill_amount = market_plants_amount - Enum.count(market_plants)
@@ -93,7 +94,21 @@ defmodule Pgboard.Game.CardDeck do
       refill_amount <= 0 -> {plant_market, card_deck}
       # Or...
       true ->
-        {_discarded_plants, valid_plants} = Enum.split_while(card_deck, &(&1 != :step3 && &1 <= max_plant_amount))
+        {_player, max_city_amount} =
+          board_cities
+          |> Enum.reduce(%{}, fn({_city, city_state}, acc) ->
+               cond do
+                 is_list(city_state) ->
+                   Enum.reduce city_state, acc, fn(city_owner, acc) ->
+                     Map.update acc, city_owner, 1, &(&1 + 1)
+                   end
+
+                 true -> acc
+               end
+             end)
+          |> Enum.max_by(fn({_owner, amount}) -> amount end)
+
+        {_discarded_plants, valid_plants} = Enum.split_while(card_deck, &(&1 != :step3 && &1 <= max_city_amount))
         plants_to_refill = Enum.take valid_plants, refill_amount
 
         processed_card_deck =
@@ -101,7 +116,6 @@ defmodule Pgboard.Game.CardDeck do
             false ->
               valid_plants -- plants_to_refill
             true ->
-              # When step3 card appears, remaining cards should be shuffled.
               Enum.shuffle(valid_plants -- plants_to_refill)
           end
 

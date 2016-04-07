@@ -32,8 +32,12 @@ defmodule Pgboard.Game.CardDeckTest do
       future_market: [17, 23, 34, 45]
     }
     card_deck = [10, 18, :step3, 42, 35]
+    board_cities =
+      1..10
+      |> Enum.map(fn(number) -> {"meow #{number}", [42, 24]} end)
+      |> Enum.into(%{})
 
-    {refilled_available_market, refilled_future_market, processed_card_deck} = CardDeck.refill_market(plant_market, card_deck, 5, 3, 10)
+    {refilled_available_market, refilled_future_market, processed_card_deck} = CardDeck.refill_market(plant_market, card_deck, 5, 3, board_cities)
 
     assert refilled_available_market == [4, 5, 17, 18, 23]
     assert refilled_future_market == [34, 45, :step3]
