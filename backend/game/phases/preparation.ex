@@ -9,7 +9,7 @@ defmodule Pgboard.Game.PreparationPhase do
   @doc """
   Set board up.
 
-  current_move: %{
+  Expected current_move: %{
     map,
     players: [{id, name, avatar}]
   }
@@ -83,15 +83,14 @@ defmodule Pgboard.Game.PreparationPhase do
     card_deck = board_state.card_deck
     bid_table =
       board_state.players
-      |> Enum.map(fn({player_id, _}) -> {player_id, nil} end)
+      |> Enum.map(fn({player_id, _}) -> {player_id, :blank} end)
       |> Enum.into(%{})
 
     plant_market = %{
       available_plants: Enum.slice(card_deck, 0..3),
       future_plants: Enum.slice(card_deck, 4..7),
       bid_table: bid_table,
-      plant_for_auction: nil,
-      discard_plant_needed: false
+      auction_status: :before_auction
     }
 
     card_deck = Enum.slice(card_deck, 8..Enum.count(card_deck))
@@ -135,6 +134,7 @@ defmodule Pgboard.Game.PreparationPhase do
     board_state =
       board_state
       |> Map.put(:game_step, 1)
+      |> Map.put(:game_round, 1)
       |> Map.put(:expected_move, expected_move)
 
     {:ok, board_state, logs_to_append ++ [log]}

@@ -58,8 +58,9 @@ defmodule Pgboard.Game.CardDeck do
   followed by card 13,
   with all other cards shuffled while removing some plants randomly (3 players: 8, 4 players: 4, above: 0).
   Finally put Step 3 card to the bottom of deck.
+  {[3-10] [13] [other_plants] [:step3]}
 
-  Each map may have specific rule of how to initialize a deck.
+  Each map may have its specific rule of how to initialize a deck.
   """
   def basic_deck(player_amount) do
     plant_market = Enum.to_list(3..10)
@@ -96,16 +97,7 @@ defmodule Pgboard.Game.CardDeck do
       true ->
         {_player, max_city_amount} =
           board_cities
-          |> Enum.reduce(%{}, fn({_city, city_state}, acc) ->
-               cond do
-                 is_list(city_state) ->
-                   Enum.reduce city_state, acc, fn(city_owner, acc) ->
-                     Map.update acc, city_owner, 1, &(&1 + 1)
-                   end
-
-                 true -> acc
-               end
-             end)
+          |> Pgboard.Game.Board.player_city_amount
           |> Enum.max_by(fn({_owner, amount}) -> amount end)
 
         {_discarded_plants, valid_plants} = Enum.split_while(card_deck, &(&1 != :step3 && &1 <= max_city_amount))

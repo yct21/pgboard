@@ -96,7 +96,6 @@ defmodule Pgboard.Game.PreparationPhaseTest do
       cond do
         is_atom(card) -> assert card == :step3
         is_integer(card) -> assert(card >= 11 && card <= 50 && not(card in [41, 43, 45, 47, 48, 49]))
-        true -> refute true
       end
     end
   end
@@ -104,9 +103,8 @@ defmodule Pgboard.Game.PreparationPhaseTest do
   defp test_plant_market(%{plant_market: plant_market, players: players}) do
     assert plant_market.available_plants == [3, 4, 5, 6]
     assert plant_market.future_plants == [7, 8, 9, 10]
-    assert plant_market.plant_for_auction == nil
-    assert plant_market.bid_table == Enum.into(Enum.map(players, fn({id, _}) -> {id, nil} end), %{})
-    assert plant_market.discard_plant_needed == false
+    assert plant_market.bid_table == Enum.into(Enum.map(players, fn({id, _}) -> {id, :blank} end), %{})
+    assert plant_market.auction_status == :before_auction
   end
 
   defp test_resource_market(%{resource_market: resource_market}) do
@@ -128,6 +126,7 @@ defmodule Pgboard.Game.PreparationPhaseTest do
     expected_move = board_state.expected_move
 
     assert board_state.game_step == 1
+    assert board_state.game_round == 1
     assert expected_move.player == List.first(board_state.player_order)
     assert expected_move.current_phase == :pick_region
   end
